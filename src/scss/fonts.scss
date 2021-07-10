@@ -1,0 +1,41 @@
+/*Fonts*/
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../fonts/roboto-regular.woff2") format("woff2"),
+  url("../fonts/roboto-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url("../fonts/roboto-medium.woff2") format("woff2"),
+  url("../fonts/roboto-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../fonts/roboto-bold.woff2") format("woff2"),
+  url("../fonts/roboto-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Work-Bold";
+  src: url("../fonts/WorkSans-Bold.woff2") format("woff2"),
+  url("../fonts/WorkSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+$roboRegular: "Roboto-Regular", "Arial", sans-serif;
+$roboMedium: "Roboto-Medium", "Arial", sans-serif;
+$roboBold: "Roboto-Bold", "Arial", sans-serif;
+$workBold: "Work-Bold", "Arial", sans-serif;
