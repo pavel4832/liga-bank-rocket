@@ -16,6 +16,7 @@ public/bundle.js.map
 
 # editors
 .idea
+/.idea
 *.sublime*
 .vscode
 
