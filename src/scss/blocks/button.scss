@@ -1,0 +1,14 @@
+.button {
+  border: none;
+  border-radius: 4px;
+  font-family: $roboMedium;
+  font-style: normal;
+  font-weight: 500;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+  &:active {
+    opacity: 0.4;
+  }
+}

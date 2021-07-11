@@ -1,11 +1,18 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  POST_REVIEW: `data/postReview`
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  CHANGE_MENU: `data/changeMenu`,
 };
 
-export const postReview = createAction(ActionType.POST_REVIEW, (review) => {
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
   return {
-    payload: review,
+    payload: status,
+  };
+});
+
+export const changeMenu = createAction(ActionType.CHANGE_MENU, (newMenu) => {
+  return {
+    payload: newMenu,
   };
 });

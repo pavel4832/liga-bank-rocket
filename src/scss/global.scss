@@ -35,6 +35,13 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
+#root {
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  align-content: start;
+  min-height: 100vh;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -47,8 +54,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .container {
-  width: 1366px;
-  padding: 0;
+  max-width: 1200px;
+  padding: 0 15px;
   margin: 0 auto;
   box-sizing: border-box;
 }

@@ -1,16 +1,18 @@
 import * as actions from '../actions';
 import {createReducer} from '@reduxjs/toolkit';
+import {MENU_TYPE} from "../../const";
 
 const initialState = {
-  isData: true,
+  menuType: MENU_TYPE.SERVICES,
 };
 
-const Data = createReducer(initialState, (builder) => {
-  builder.addCase(actions.postReview, (state) => {
+const DATA = createReducer(initialState, (builder) => {
+  builder.addCase(actions.changeMenu, (state, action) => {
     return {
       ...state,
+      menuType: action.payload,
     };
   });
 });
 
-export {Data};
+export {DATA};
