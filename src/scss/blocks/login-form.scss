@@ -7,6 +7,9 @@
   padding: 0 56px;
   background-color: $background-pink;
   border: 4px solid $blue;
+  @media screen and(max-width: $tablet) {
+    width: 678px;
+  }
 }
 
 .login-popup__header {

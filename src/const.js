@@ -1,6 +1,7 @@
 export const AppRoute = {
   ROOT: `/`,
-  CONVERTER: `/converter`
+  CONVERTER: `/converter`,
+  QUESTIONS: `/questions`
 };
 
 export const AuthorizationStatus = {

@@ -65,7 +65,7 @@ const LoginForm = (props) => {
               <p className="login-logo__small">интернет-банк</p>
             </div>
           </div>
-          <button className="login-popup__btn close-btn button" type="button" aria-label="Закрыть" onClick={handleClose}></button>
+          <button className="login-popup__btn button" type="button" aria-label="Закрыть" onClick={handleClose}></button>
         </div>
         <form className="login-popup__form login-form" action="https://echo.htmlacademy.ru" method="post" onSubmit={handleSubmit} noValidate={true}>
           <label className="login-form__label">Логин

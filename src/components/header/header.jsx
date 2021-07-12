@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import HeaderMenu from "../header-menu/header-menu";
 import UserBlock from '../user-block/user-block';
 import {Link} from 'react-router-dom';
-import {useDispatch} from "react-redux";
-import {changeMenu} from "../../store/actions";
-import {MENU_TYPE} from "../../const";
+import {useDispatch} from 'react-redux';
+import {changeMenu} from '../../store/actions';
+import {MENU_TYPE} from '../../const';
 
 const Header = () => {
+  const [isActive, setActive] = useState(false);
   const dispatch = useDispatch();
 
   return (
@@ -22,13 +23,16 @@ const Header = () => {
               }}
             >
               <div className="logo__wrapper">
-                <img src="./img/logo-icon.svg" alt="Лого" className="logo__image" width="28" height="25"/>
-                <p className="logo__text">ЛИГА Банк</p>
+                <picture>
+                  <source media="(min-width: 768px)" type="image/svg+xml" srcSet="./img/logo-icon.svg"/>
+                  <img className="logo__image" src="./img/logo-icon-mobile.svg" alt="Лого"/>
+                </picture>
+                <p className="logo__text">ЛИГА&nbsp;Банк</p>
               </div>
             </Link>
           </div>
-          <HeaderMenu />
-          <UserBlock />
+          <HeaderMenu isActive={isActive} setActive={setActive}/>
+          <UserBlock isMobile={false} isMenuOpen={isActive} setActive={setActive}/>
         </div>
       </div>
     </header>

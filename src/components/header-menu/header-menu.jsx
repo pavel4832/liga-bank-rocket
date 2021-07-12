@@ -1,11 +1,14 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {MENU_TYPE, AppRoute} from "../../const";
-import {changeMenu} from "../../store/actions";
+import {MENU_TYPE, AppRoute} from '../../const';
+import {changeMenu} from '../../store/actions';
+import UserBlock from '../user-block/user-block';
+import PropTypes from 'prop-types';
 
-const HeaderMenu = () => {
+const HeaderMenu = (props) => {
   const {menuType} = useSelector((state) => state.DATA);
+  const {isActive, setActive} = props;
 
   const dispatch = useDispatch();
 
@@ -13,7 +16,6 @@ const HeaderMenu = () => {
   let loanActiveLink = ``;
   let converterActiveLink = ``;
   let contactActiveLink = ``;
-  let questionsActiveLink = ``;
 
   switch (menuType) {
     case MENU_TYPE.SERVICES:
@@ -21,33 +23,39 @@ const HeaderMenu = () => {
       loanActiveLink = ``;
       converterActiveLink = ``;
       contactActiveLink = ``;
-      questionsActiveLink = ``;
       break;
     case MENU_TYPE.LOAN:
       servicesActiveLink = ``;
       loanActiveLink = `page-menu__link--active`;
       converterActiveLink = ``;
       contactActiveLink = ``;
-      questionsActiveLink = ``;
       break;
     case MENU_TYPE.CONVERTER:
       servicesActiveLink = ``;
       loanActiveLink = ``;
       converterActiveLink = `page-menu__link--active`;
       contactActiveLink = ``;
-      questionsActiveLink = ``;
       break;
     case MENU_TYPE.CONTACT:
       servicesActiveLink = ``;
       loanActiveLink = ``;
       converterActiveLink = ``;
       contactActiveLink = `page-menu__link--active`;
-      questionsActiveLink = ``;
       break;
   }
 
+  const openMenuHandler = () => {
+    setActive(true);
+  };
+
   return (
-    <nav className="page-menu">
+    <nav className={`page-menu ${isActive && `active`}`}>
+      <div
+        className="page-menu__button"
+        onClick={openMenuHandler}
+      >
+        <span className="page-menu__icon"></span>
+      </div>
       <ul className="page-menu__list">
         <li className="page-menu__item">
           <Link
@@ -93,9 +101,17 @@ const HeaderMenu = () => {
             Контакты
           </Link>
         </li>
+        <li className="page-menu__item user-item">
+          <UserBlock isMobile={true}/>
+        </li>
       </ul>
     </nav>
   );
+};
+
+HeaderMenu.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;

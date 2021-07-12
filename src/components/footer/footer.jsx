@@ -13,40 +13,43 @@ const Footer = () => {
       <div className="container">
         <div className="page-footer__wrapper">
           <div className="page-footer__left">
-            <div className="page-footer__address address">
-              <div className="address__logo logo">
-                <Link
-                  to="/"
-                  className="logo__link"
-                  onClick={() => {
-                    dispatch(changeMenu(MENU_TYPE.SERVICES));
-                  }}
-                >
-                  <div className="logo__wrapper">
-                    <img src="./img/logo-icon.svg" alt="Лого" className="logo__image" width="28" height="25"/>
-                    <p className="logo__text">ЛИГА Банк</p>
-                  </div>
-                </Link>
-              </div>
-              <p className="address__text">
-                150015, г. Москва, ул. Московская, д. 32<br/>Генеральная&nbsp;лицензия&nbsp;Банка&nbsp;России&nbsp;№1050<br/>Ⓒ Лига Банк, 2019
-              </p>
+            <div className="page-footer__logo logo">
+              <Link
+                to="/"
+                className="logo__link"
+                onClick={() => {
+                  dispatch(changeMenu(MENU_TYPE.SERVICES));
+                }}
+              >
+                <div className="logo__wrapper">
+                  <picture>
+                    <source media="(min-width: 768px)" type="image/svg+xml" srcSet="./img/logo-icon.svg"/>
+                    <img className="logo__image" src="./img/logo-icon-mobile.svg" alt="Лого"/>
+                  </picture>
+                  <p className="logo__text">ЛИГА Банк</p>
+                </div>
+              </Link>
             </div>
             <div className="page-footer__menu">
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link to={AppRoute.SERVICES} className="page-footer__link">Услуги</Link>
+                  <Link to={AppRoute.ROOT} className="page-footer__link">Услуги</Link>
                 </li>
                 <li className="page-footer__item">
-                  <Link to={AppRoute.LOAN} className="page-footer__link">Рассчитать&nbsp;кредит</Link>
+                  <Link to={AppRoute.ROOT} className="page-footer__link">Рассчитать&nbsp;кредит</Link>
                 </li>
                 <li className="page-footer__item">
-                  <Link to={AppRoute.CONTACT} className="page-footer__link">Контакты</Link>
+                  <Link to={AppRoute.ROOT} className="page-footer__link">Контакты</Link>
                 </li>
                 <li className="page-footer__item">
                   <Link to={AppRoute.QUESTIONS} className="page-footer__link">Задать вопрос</Link>
                 </li>
               </ul>
+            </div>
+            <div className="page-footer__address address">
+              <p className="address__text">
+                150015, г. Москва, ул. Московская, д. 32<br/>Генеральная&nbsp;лицензия&nbsp;Банка&nbsp;России&nbsp;№1050<br/>Ⓒ Лига Банк, 2019
+              </p>
             </div>
           </div>
           <div className="page-footer__right">
