@@ -18,6 +18,7 @@ const UserBlock = (props) => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
     } else if (isMenuOpen) {
+      document.body.classList.remove(`_lock`);
       setActive(!isMenuOpen);
     } else {
       onLoginOpenHandler();

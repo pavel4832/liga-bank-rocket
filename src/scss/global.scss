@@ -20,6 +20,10 @@ body {
   color: $black;
 }
 
+body._lock {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
 }

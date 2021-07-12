@@ -45,6 +45,7 @@ const HeaderMenu = (props) => {
   }
 
   const openMenuHandler = () => {
+    document.body.classList.add(`_lock`);
     setActive(true);
   };
 
