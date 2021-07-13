@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Slides} from '../../const';
+import {RADIX, Slides} from '../../const';
 
 const Dots = (props) => {
   const {isActive, setActive} = props;
 
   const onButtonClickHandler = (evt) => {
-    const currentSlide = evt.target.dataset.number;
+    const currentSlide = parseInt(evt.target.dataset.number, RADIX) - 1;
     setActive(currentSlide);
   };
 

@@ -34,7 +34,9 @@ export const MENU_TYPE = {
 export const SLIDE_QTY = 3;
 
 export const Slides = {
-  SLIDE1: `1`,
-  SLIDE2: `2`,
-  SLIDE3: `3`
+  SLIDE1: 0,
+  SLIDE2: 1,
+  SLIDE3: 2
 };
+
+export const SWIPE_SENS = 75;

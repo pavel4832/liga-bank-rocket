@@ -2,7 +2,7 @@ import React from 'react';
 
 const Slide2 = () => {
   return (
-    <div className="slider__item slide slide--second">
+    <div className="slider__content slide slide--second">
       <div className="container">
         <div className="slide__wrapper">
           <div className="slide__info">
