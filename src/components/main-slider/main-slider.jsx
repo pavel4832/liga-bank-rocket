@@ -3,7 +3,7 @@ import Dots from '../dots/dots';
 import Slide1 from '../slide-1/slide-1';
 import Slide2 from '../slide-2/slide-2';
 import Slide3 from '../slide-3/slide-3';
-import {SWIPE_SENS} from "../../const";
+import {SWIPE_SENS} from '../../const';
 
 const MainSlider = () => {
   const [isActive, setActive] = useState(0);
@@ -51,15 +51,8 @@ const MainSlider = () => {
     }
   };
 
-  const prevSlideIndex = isActive ? isActive - 1 : slides.length - 1;
-
-  const nextSlideIndex = isActive === slides.length - 1 ? 0 : isActive + 1;
-
   return (
     <section className="page-main__slider slider">
-      <div className="slider__item slider__item--prev" key={prevSlideIndex}>
-        {slides[prevSlideIndex]}
-      </div>
       <div
         className="slider__item"
         key={isActive}
@@ -68,9 +61,6 @@ const MainSlider = () => {
         onTouchEnd={handleTouchEnd}
       >
         {slides[isActive]}
-      </div>
-      <div className="slider__item slider__item--next" key={nextSlideIndex}>
-        {slides[nextSlideIndex]}
       </div>
       <Dots isActive={isActive} setActive={setActive} />
     </section>
