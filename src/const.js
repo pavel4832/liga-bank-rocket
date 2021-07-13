@@ -30,3 +30,11 @@ export const MENU_TYPE = {
   CONTACT: `contact`,
   QUESTIONS: `questions`
 };
+
+export const SLIDE_QTY = 3;
+
+export const Slides = {
+  SLIDE1: `1`,
+  SLIDE2: `2`,
+  SLIDE3: `3`
+};

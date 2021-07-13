@@ -1,11 +1,10 @@
 import React from 'react';
+import MainSlider from '../main-slider/main-slider';
 
 const MainBody = () => {
   return (
     <main className="page-main">
-      <div className="container">
-        <p>125466</p>
-      </div>
+      <MainSlider />
     </main>
   );
 };
