@@ -8,11 +8,11 @@ const MainContact = () => {
       <div className="container">
         <h2 className="contact__title">Отделения Лига Банка</h2>
         <YMaps>
-          <div className="contact__map">
+          <div className="contact__map map">
             <Map
-              className="map__body map__body--desktop"
+              className="map__body"
               defaultState={{
-                center: [56.86, 56.59],
+                center: [56.86491379, 60.36021131],
                 zoom: 5,
                 controls: [],
               }}
@@ -25,54 +25,16 @@ const MainContact = () => {
                 options={{
                   position: {right: `10px`, bottom: `80px`}
                 }} />
-              {PlacemarkCords.desktop.map((mark, index) => (
+              {PlacemarkCords.map((mark, index) => (
                 <Placemark
                   key={index}
-                  geometry={mark} />
-              ))}
-            </Map>
-            <Map
-              className="map__body map__body--tablet"
-              defaultState={{
-                center: [57.9909, 67.6896],
-                zoom: 5,
-                controls: [],
-              }}
-            >
-              <ZoomControl
-                options={{
-                  position: {right: `10px`, bottom: `120px`}
-                }} />
-              <GeolocationControl
-                options={{
-                  position: {right: `10px`, bottom: `80px`}
-                }} />
-              {PlacemarkCords.tablet.map((mark, index) => (
-                <Placemark
-                  key={index}
-                  geometry={mark} />
-              ))}
-            </Map>
-            <Map
-              className="map__body map__body--mobile"
-              defaultState={{
-                center: [58.2525, 78.1163],
-                zoom: 5,
-                controls: [],
-              }}
-            >
-              <ZoomControl
-                options={{
-                  position: {right: `10px`, bottom: `120px`}
-                }} />
-              <GeolocationControl
-                options={{
-                  position: {right: `10px`, bottom: `80px`}
-                }} />
-              {PlacemarkCords.mobile.map((mark, index) => (
-                <Placemark
-                  key={index}
-                  geometry={mark} />
+                  geometry={mark}
+                  options={{
+                    iconLayout: `default#image`,
+                    iconImageHref: `./img/location.svg`,
+                    iconImageSize: [37, 42],
+                    iconImageOffset: [-17, -42]
+                  }}/>
               ))}
             </Map>
           </div>
