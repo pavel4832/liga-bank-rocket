@@ -8,9 +8,7 @@ const Slide1 = () => {
           <div className="slide__info">
             <h1 className="slide__title">Лига Банк</h1>
             <p className="slide__text">Кредиты на любой случай</p>
-            <button className="slide__button button">
-              Рассчитать кредит
-            </button>
+            <button className="slide__button button">Рассчитать кредит</button>
           </div>
           <div className="slide__images">
             <picture>
