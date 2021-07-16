@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AuthorizationStatus} from '../../const';
 import {requireAuthorization} from '../../store/actions';
 import LoginForm from '../login-form/login-form';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import {popupCloseHandler} from '../../utils';
+import Popup from '../popup/popup';
 
 
 const UserBlock = (props) => {
@@ -64,7 +66,9 @@ const UserBlock = (props) => {
         <p className="user-block__text">Выйти из Интернет-банка</p>
       }
     </div>
-    {(loginActive) && <LoginForm active={loginActive} setActive={setLoginActive}/>}
+    {(loginActive) && <Popup active={loginActive} setActive={setLoginActive} handleClose={popupCloseHandler}>
+      <LoginForm setActive={setLoginActive} handleClose={popupCloseHandler} />
+    </Popup>}
   </React.Fragment>;
 };
 
