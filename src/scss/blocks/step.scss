@@ -106,35 +106,82 @@
 }
 
 .step__range {
-  margin: 0;
-  overflow: hidden;
-  width: 600px;
   -webkit-appearance: none;
-  background-color: $gray;
-  &::-webkit-slider-runnable-track {
-    height: 2px;
-    -webkit-appearance: none;
-    color: $gray;
-    margin-top: -1px;
+  width: 100%;
+  margin-top: 21px;
+  background: transparent;
+  &:focus {
+    outline: none;
   }
   &::-webkit-slider-thumb {
-    width: 14px;
     -webkit-appearance: none;
     height: 14px;
+    width: 14px;
     border-radius: 50%;
-    cursor: pointer;
     background: $blue;
+    cursor: pointer;
+    margin-top: -7px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
   }
-  &::-moz-range-progress {
-    background-color: $text-error-red;
+  &::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: $blue;
+    cursor: pointer;
+  }
+  &::-ms-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: $blue;
+    cursor: pointer;
+  }
+  &:focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+  &::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 1px;
+    cursor: pointer;
+    background: $gray;
+  }
+  &:focus::-webkit-slider-runnable-track {
+    background: $gray;
   }
   &::-moz-range-track {
-    background-color: $gray;
+    width: 100%;
+    height: 1px;
+    cursor: pointer;
+    background: $gray;
+  }
+  &::-ms-track {
+    width: 100%;
+    height: 1px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 1px 0;
+    color: transparent;
   }
   &::-ms-fill-lower {
-    background-color: $text-error-red;
+    background: $blue;
+  }
+  &:focus::-ms-fill-lower {
+    background: $gray;
   }
   &::-ms-fill-upper {
-    background-color: $gray;
+    background: $gray;
+  }
+  &:focus::-ms-fill-upper {
+    background: $gray;
   }
 }

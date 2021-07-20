@@ -21,7 +21,7 @@ const Popup = (props) => {
 
   return (
     <section
-      className={`page-login login-popup popup ${active ? `active` : ``}`}
+      className={`login-popup popup ${active ? `active` : ``}`}
       onClick={() => popupCloseHandler(setActive)}
     >
       {children}

@@ -79,6 +79,7 @@ export const PRICES_DATA = {
 
 export const FIRST_PAYMENT_RATE = {
   MIN: 10,
+  MAX: 100
 };
 
 export const LOAN_TERM = {
