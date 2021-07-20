@@ -5,9 +5,10 @@ import {Validations, AuthorizationStatus} from '../../const';
 import {useInput} from '../../hooks/hooks';
 import {useDispatch} from 'react-redux';
 import {requireAuthorization} from '../../store/actions';
+import {popupCloseHandler} from '../../utils';
 
 const LoginForm = (props) => {
-  const {setActive, handleClose} = props;
+  const {setActive} = props;
   const [isError, setError] = useState(false);
   const [isView, setView] = useState(false);
   const name = useInput(``, Validations.IS_EMPTY);
@@ -22,7 +23,7 @@ const LoginForm = (props) => {
 
   const formCloseHandler = () => {
     resetForm();
-    handleClose(setActive);
+    popupCloseHandler(setActive);
   };
 
   const handleSubmit = (evt) => {
@@ -91,7 +92,6 @@ const LoginForm = (props) => {
 
 LoginForm.propTypes = {
   setActive: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

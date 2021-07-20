@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {KeyName} from '../../const';
+import {popupCloseHandler} from '../../utils';
 
 const Popup = (props) => {
-  const {active, setActive, handleClose, children} = props;
+  const {active, setActive, children} = props;
 
   const onKeydown = (evt) => {
     switch (evt.key) {
@@ -19,7 +20,10 @@ const Popup = (props) => {
   });
 
   return (
-    <section className={`page-login login-popup popup ${active ? `active` : ``}`} onClick={() => handleClose(setActive)}>
+    <section
+      className={`page-login login-popup popup ${active ? `active` : ``}`}
+      onClick={() => popupCloseHandler(setActive)}
+    >
       {children}
     </section>
   );
@@ -28,7 +32,6 @@ const Popup = (props) => {
 Popup.propTypes = {
   active: PropTypes.bool.isRequired,
   setActive: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 export default Popup;
