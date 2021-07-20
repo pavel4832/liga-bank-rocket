@@ -54,7 +54,7 @@ export const TABS_MENU = [
   }
 ];
 
-export const PlacemarkCords = [
+export const PlaceMarkCords = [
   [55.7499, 37.6290],
   [55.7961, 49.1066],
   [57.1530, 65.5441],

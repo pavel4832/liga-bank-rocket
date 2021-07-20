@@ -1,6 +1,6 @@
 import React from 'react';
 import {YMaps, Map, Placemark, ZoomControl, GeolocationControl} from 'react-yandex-maps';
-import {PlacemarkCords} from '../../const';
+import {PlaceMarkCords} from '../../const';
 
 const MainContact = () => {
   return (
@@ -25,7 +25,7 @@ const MainContact = () => {
                 options={{
                   position: {right: `10px`, bottom: `80px`}
                 }} />
-              {PlacemarkCords.map((mark, index) => (
+              {PlaceMarkCords.map((mark, index) => (
                 <Placemark
                   key={index}
                   geometry={mark}
