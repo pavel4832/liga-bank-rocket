@@ -12,7 +12,7 @@ const MainLoanCalculator = () => {
         <h2 className="loan-calculator__title">Кредитный калькулятор</h2>
         <div className="loan-calculator__wrapper">
           <Step1 />
-          {(purpose) && <Step2 purpose={purpose} />}
+          {(purpose) && <Step2 />}
         </div>
       </div>
     </section>

@@ -22,13 +22,13 @@ const Step1 = () => {
   };
 
   return (
-    <div className="loan-calculator__step1 step1">
-      <h3 className="step1__title">Шаг 1. Цель кредита</h3>
-      <label className="step1_label">
+    <div className="loan-calculator__step1 step step1">
+      <h3 className="step__title">Шаг 1. Цель кредита</h3>
+      <label className="step__label">
         <input
           ref={purpose}
           aria-label="Цель кредита"
-          className="step1_field"
+          className="step__field"
           type="text"
           name="purpose"
           placeholder="Выберите цель кредита"
@@ -36,7 +36,7 @@ const Step1 = () => {
           readOnly={true}
         />
         <button
-          className={`step1__button button ${(isClose) && `button--close`}`}
+          className={`step__button button ${(isClose) && `button--close`}`}
           aria-label={(!isClose) ? `Открыть` : `Закрыть`}
           onClick={openPurposeHandler}
         >

@@ -71,3 +71,18 @@ export const PurposeValue = {
   mortgage: `Ипотечное кредитование`,
   auto: `Автомобильное кредитование`
 };
+
+export const PRICES_DATA = {
+  START: 1200000,
+  END: 25000000,
+};
+
+export const FIRST_PAYMENT_RATE = {
+  MIN: 10,
+};
+
+export const LOAN_TERM = {
+  MIN: 5,
+  MAX_MORTGAGE: 30,
+  MAX_AUTO: 30,
+};

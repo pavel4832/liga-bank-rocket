@@ -1,0 +1,140 @@
+.step__title {
+  margin: 16px 0 0;
+  font-family: $roboMedium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+  color: $black;
+  @media screen and(max-width: $tablet) {
+    margin: 2px 0 0;
+    font-size: 18px;
+  }
+  @media screen and(max-width: $mobile) {
+    margin: 5px 0 0;
+    font-size: 16px;
+  }
+}
+
+.step__label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+  @media screen and(max-width: $tablet) {
+    margin-top: 19px;
+  }
+  @media screen and(max-width: $mobile) {
+    margin-top: 14px;
+  }
+}
+
+.step__field {
+  padding-left: 23px;
+  width: 600px;
+  min-height: 60px;
+  font-family: $roboMedium;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  color: $black;
+  border: 1px solid $black;
+  box-sizing: border-box;
+  border-radius: 4px;
+  &::placeholder {
+    color: $black;
+  }
+  @media screen and(max-width: $tablet) {
+    width: 678px;
+    margin-top: 19px;
+  }
+  @media screen and(max-width: $mobile) {
+    width: 290px;
+    margin-top: 14px;
+    padding-left: 13px;
+  }
+}
+
+.step__button {
+  position: absolute;
+  top: 25px;
+  right: 23px;
+  width: 18px;
+  height: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  background-color: $background-white;
+  @media screen and(max-width: $mobile) {
+    right: 15px;
+  }
+}
+
+.step__button.button--close {
+  transform: rotate(180deg);
+}
+
+.step__button.button--increase {
+  top: 50px;
+}
+
+.step__button.button--decrease {
+  top: 50px;
+  left: 23px;
+  @media screen and(max-width: $mobile) {
+    left: 15px;
+  }
+}
+
+.step__comments-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step__comments {
+  margin-top: 7px;
+  font-family: $roboRegular;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: $footer-gray;
+}
+
+.step__range {
+  margin: 0;
+  overflow: hidden;
+  width: 600px;
+  -webkit-appearance: none;
+  background-color: $gray;
+  &::-webkit-slider-runnable-track {
+    height: 2px;
+    -webkit-appearance: none;
+    color: $gray;
+    margin-top: -1px;
+  }
+  &::-webkit-slider-thumb {
+    width: 14px;
+    -webkit-appearance: none;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: $blue;
+  }
+  &::-moz-range-progress {
+    background-color: $text-error-red;
+  }
+  &::-moz-range-track {
+    background-color: $gray;
+  }
+  &::-ms-fill-lower {
+    background-color: $text-error-red;
+  }
+  &::-ms-fill-upper {
+    background-color: $gray;
+  }
+}

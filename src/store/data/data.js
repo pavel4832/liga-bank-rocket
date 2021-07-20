@@ -1,10 +1,11 @@
 import * as actions from '../actions';
 import {createReducer} from '@reduxjs/toolkit';
-import {MENU_TYPE} from '../../const';
+import {MENU_TYPE, PRICES_DATA} from '../../const';
 
 const initialState = {
   menuType: MENU_TYPE.SERVICES,
   purpose: ``,
+  startPrice: PRICES_DATA.START,
 };
 
 const DATA = createReducer(initialState, (builder) => {
