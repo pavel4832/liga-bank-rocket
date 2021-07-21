@@ -121,6 +121,15 @@ const Step2 = () => {
           <span className="step__comments">{maxLoanTerm.toLocaleString(`ru-RU`)} лет</span>
         </div>
       </label>
+      <input
+        id="step-checkbox"
+        className="step__checkbox visually-hidden"
+        type="checkbox"
+        name="mother"
+      />
+      <label htmlFor="step-checkbox" className="step__label step__label--checkbox">
+        Использовать материнский капитал
+      </label>
       {(isPriceError) && <Popup active={isPriceError} setActive={setPriceError}>
         <ErrorPricePopup setActive={setPriceError} />
       </Popup>}
