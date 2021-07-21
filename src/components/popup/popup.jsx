@@ -4,7 +4,7 @@ import {KeyName} from '../../const';
 import {popupCloseHandler} from '../../utils';
 
 const Popup = (props) => {
-  const {active, setActive, children} = props;
+  const {name, active, setActive, children} = props;
 
   const onKeydown = (evt) => {
     switch (evt.key) {
@@ -21,7 +21,7 @@ const Popup = (props) => {
 
   return (
     <section
-      className={`login-popup popup ${active ? `active` : ``}`}
+      className={`${name}__popup popup ${active ? `active` : ``}`}
       onClick={() => popupCloseHandler(setActive)}
     >
       {children}
@@ -30,8 +30,10 @@ const Popup = (props) => {
 };
 
 Popup.propTypes = {
+  name: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   setActive: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
+
 export default Popup;

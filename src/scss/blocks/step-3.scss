@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 770px;
+  max-width: 770px;
   height: 722px;
   margin-top: 68px;
   padding-left: 70px;
@@ -56,4 +56,80 @@
   font-size: 22px;
   line-height: 54px;
   color: $black;
+}
+
+.step3__input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.step3__label {
+  position: relative;
+}
+
+.step3__field {
+  margin-top: 30px;
+  padding-left: 24px;
+  height: 60px;
+  font-family: $roboRegular;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0.03em;
+  color: $black;
+  background: $background-pink;
+  border: 1px solid $border-black;
+  box-sizing: border-box;
+  border-radius: 4px;
+  &:invalid {
+    border: 1px solid $black;
+  }
+  &:focus ~ .login-form__required {
+    display: none;
+  }
+  &::placeholder {
+    color: $footer-gray;
+  }
+}
+
+.name-field {
+  width: 630px;
+}
+
+.phone-field {
+  width: 300px;
+}
+
+.mail-field {
+  width: 300px;
+}
+
+.step3__errorText {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-family: $roboRegular;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: $text-error-red;
+}
+
+.step3__errorText.error {
+  display: block;
+}
+
+.step3__submit {
+  margin: 38px auto 0;
+  width: 198px;
+  font-size: 16px;
+  line-height: 51px;
+  color: $white;
+  text-align: center;
+  background: $blue;
+  cursor: pointer;
 }

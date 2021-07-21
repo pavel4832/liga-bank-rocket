@@ -87,3 +87,13 @@ export const LOAN_TERM = {
   MAX_MORTGAGE: 30,
   MAX_AUTO: 30,
 };
+
+export const ERROR_TYPE = {
+  PRICE: `price`,
+  LOAN: `loan`,
+};
+
+export const ERROR_MESSAGE = {
+  PRICE: `Цена не может быть за пределами указанного диапазона.`,
+  LOAN: `Наш банк не выдаёт ипотечные кредиты меньше 500 000 рублей.`,
+};

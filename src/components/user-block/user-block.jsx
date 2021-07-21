@@ -5,6 +5,7 @@ import {requireAuthorization} from '../../store/actions';
 import LoginForm from '../login-form/login-form';
 import PropTypes from 'prop-types';
 import Popup from '../popup/popup';
+import {popupOpenHandler} from '../../utils';
 
 
 const UserBlock = (props) => {
@@ -22,17 +23,8 @@ const UserBlock = (props) => {
       document.body.classList.remove(`_lock`);
       setActive(!isMenuOpen);
     } else {
-      onLoginOpenHandler();
+      popupOpenHandler(setLoginActive);
     }
-  };
-
-  const onLoginOpenHandler = () => {
-    const scrollY = window.pageYOffset;
-    const screenWidth = document.body.clientWidth;
-    document.body.style.position = `fixed`;
-    document.body.style.minWidth = `${screenWidth}px`;
-    document.body.style.top = `-${scrollY}px`;
-    setLoginActive(true);
   };
 
   const LoginIcon = () => {
@@ -65,7 +57,7 @@ const UserBlock = (props) => {
         <p className="user-block__text">Выйти из Интернет-банка</p>
       }
     </div>
-    {(loginActive) && <Popup active={loginActive} setActive={setLoginActive}>
+    {(loginActive) && <Popup name={`login`} active={loginActive} setActive={setLoginActive}>
       <LoginForm setActive={setLoginActive} />
     </Popup>}
   </React.Fragment>;

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import ErrorPricePopup from '../../error-price-popup/error-price-popup';
-import {PRICES_DATA, FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose} from '../../../const';
+import ErrorPopup from '../../error-popup/error-popup';
+import {PRICES_DATA, FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose, ERROR_TYPE} from '../../../const';
 import {changePrice, changeFirstPayment, changeLoanTerm} from '../../../store/actions';
 import Popup from "../../popup/popup";
+import {popupOpenHandler} from '../../../utils';
 
 const Step2 = () => {
   const {purpose, price, firstPayment, loanTerm} = useSelector((state) => state.DATA);
@@ -15,25 +16,28 @@ const Step2 = () => {
   const priceChangeHandler = (evt) => {
     const newPrice = evt.target.value;
     if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      setPriceError(true);
+      popupOpenHandler(setPriceError);
+    } else {
+      dispatch(changePrice(newPrice));
     }
-    dispatch(changePrice(newPrice));
   };
 
   const priceDownClickHandler = () => {
     const newPrice = price - 1;
     if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      setPriceError(true);
+      popupOpenHandler(setPriceError);
+    } else {
+      dispatch(changePrice(newPrice));
     }
-    dispatch(changePrice(newPrice));
   };
 
   const priceUpClickHandler = () => {
     const newPrice = price + 1;
     if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      setPriceError(true);
+      popupOpenHandler(setPriceError);
+    } else {
+      dispatch(changePrice(newPrice));
     }
-    dispatch(changePrice(newPrice));
   };
 
   const loanFirstPaymentHandler = (evt) => {
@@ -130,8 +134,8 @@ const Step2 = () => {
       <label htmlFor="step-checkbox" className="step__label step__label--checkbox">
         Использовать материнский капитал
       </label>
-      {(isPriceError) && <Popup active={isPriceError} setActive={setPriceError}>
-        <ErrorPricePopup setActive={setPriceError} />
+      {(isPriceError) && <Popup name={`step2`} active={isPriceError} setActive={setPriceError}>
+        <ErrorPopup type={ERROR_TYPE.PRICE} />
       </Popup>}
     </div>
   );

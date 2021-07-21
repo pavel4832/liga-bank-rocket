@@ -7,7 +7,7 @@ import Offer from './Offer/offer'
 
 const MainLoanCalculator = () => {
   const {purpose} = useSelector((state) => state.DATA);
-  const [isOffer, setOffer] = useState(true);
+  const [isOffer, setOffer] = useState(false);
   const [isComplete, setComplete] = useState(true);
 
   return (
@@ -17,8 +17,8 @@ const MainLoanCalculator = () => {
         <div className="loan-calculator__wrapper">
           <Step1 />
           {(purpose) && <Step2 />}
-          {(purpose) && <Offer />}
-          {(isOffer) && <Step3 />}
+          {(purpose) && <Offer setActive={setOffer} />}
+          {(isOffer) && <Step3 setActive={setOffer} />}
         </div>
       </div>
     </section>
