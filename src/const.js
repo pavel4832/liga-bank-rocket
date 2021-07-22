@@ -77,6 +77,8 @@ export const PRICES_DATA = {
   END: 25000000,
 };
 
+export const PRICE_STEP = 100000;
+
 export const FIRST_PAYMENT_RATE = {
   MIN: 10,
   MAX: 100

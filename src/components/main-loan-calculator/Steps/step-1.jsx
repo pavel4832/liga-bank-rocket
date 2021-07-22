@@ -50,7 +50,7 @@ const Step1 = () => {
               href="#" className="step1__link"
               data-choice={LoanPurpose.MORTGAGE}
               onClick={choiceClickHandler}
-            >Ипотечное кредитование</a>
+            >{PurposeValue[LoanPurpose.MORTGAGE]}</a>
           </li>
           <li className="step1__choice">
             <a
@@ -58,7 +58,7 @@ const Step1 = () => {
               className="step1__link"
               data-choice={LoanPurpose.AUTO}
               onClick={choiceClickHandler}
-            >Автомобильное кредитование</a>
+            >{PurposeValue[LoanPurpose.AUTO]}</a>
           </li>
         </ul>
       </label>

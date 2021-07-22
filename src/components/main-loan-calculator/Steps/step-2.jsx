@@ -1,42 +1,72 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ErrorPopup from '../../error-popup/error-popup';
-import {PRICES_DATA, FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose, ERROR_TYPE} from '../../../const';
+import {
+  PRICES_DATA,
+  FIRST_PAYMENT_RATE,
+  LOAN_TERM,
+  LoanPurpose,
+  ERROR_TYPE,
+  PRICE_STEP,
+  Validations, RADIX
+} from '../../../const';
 import {changePrice, changeFirstPayment, changeLoanTerm} from '../../../store/actions';
 import Popup from "../../popup/popup";
-import {popupOpenHandler} from '../../../utils';
+import {getNumberFromString, popupOpenHandler} from '../../../utils';
+import {useInput} from '../../../hooks/hooks';
 
 const Step2 = () => {
   const {purpose, price, firstPayment, loanTerm} = useSelector((state) => state.DATA);
   const [isPriceError, setPriceError] = useState(false);
+  const [isPrice, setPrice] = useState(`${price.toLocaleString(`ru-RU`)} рублей`);
   const dispatch = useDispatch();
 
   const maxLoanTerm = (purpose === LoanPurpose.MORTGAGE) ? LOAN_TERM.MAX_MORTGAGE : LOAN_TERM.MAX_AUTO;
 
   const priceChangeHandler = (evt) => {
-    const newPrice = evt.target.value;
-    if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      popupOpenHandler(setPriceError);
+    let newPrice;
+    if (evt.target.value.search(`рублей`) > 0) {
+      newPrice = getNumberFromString(evt.target.value, `рублей`);
     } else {
-      dispatch(changePrice(newPrice));
+      newPrice = evt.target.value;
+    }
+    setPrice(`${newPrice.toLocaleString(`ru-RU`)}`);
+    dispatch(changePrice(newPrice));
+  };
+
+  const priceCheckHandler = (evt) => {
+    let newPrice;
+    if (evt.target.value.search(`рублей`) > 0) {
+      newPrice = getNumberFromString(evt.target.value, `рублей`);
+    } else {
+      newPrice = parseInt(evt.target.value, RADIX);
+    }
+    if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
+      setPriceError(true);
+    } else {
+      setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
   const priceDownClickHandler = () => {
-    const newPrice = price - 1;
-    if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      popupOpenHandler(setPriceError);
+    const newPrice = price - PRICE_STEP;
+    if (newPrice < PRICES_DATA.START) {
+      setPriceError(true);
     } else {
+      setPriceError(false);
       dispatch(changePrice(newPrice));
+      setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
   const priceUpClickHandler = () => {
-    const newPrice = price + 1;
-    if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
-      popupOpenHandler(setPriceError);
+    const newPrice = price + PRICE_STEP;
+    if (newPrice > PRICES_DATA.END) {
+      setPriceError(true);
     } else {
+      setPriceError(false);
       dispatch(changePrice(newPrice));
+      setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
@@ -65,11 +95,13 @@ const Step2 = () => {
           </svg>
         </button>
         <input
-          value={`${price.toLocaleString(`ru-RU`)} рублей`}
-          className="step__field step2__field"
+          value={(!isPriceError) ? isPrice : `Некорректное значение`}
+          className={`step__field step2__field ${(isPriceError) && `field-error`}`}
           type="text"
           name="price"
+          onClick={() => setPriceError(false)}
           onChange={priceChangeHandler}
+          onBlur={priceCheckHandler}
         />
         <button
           className="step__button button button--increase"
@@ -134,9 +166,6 @@ const Step2 = () => {
       <label htmlFor="step-checkbox" className="step__label step__label--checkbox">
         Использовать материнский капитал
       </label>
-      {(isPriceError) && <Popup name={`step2`} active={isPriceError} setActive={setPriceError}>
-        <ErrorPopup type={ERROR_TYPE.PRICE} />
-      </Popup>}
     </div>
   );
 };

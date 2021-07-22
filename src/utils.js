@@ -7,7 +7,7 @@ export const popupOpenHandler = (setAction) => {
   document.body.style.minWidth = `${screenWidth}px`;
   document.body.style.top = `-${scrollY}px`;
   setAction(true);
-}
+};
 
 export const popupCloseHandler = (setAction) => {
   const scrollY = document.body.style.top;
@@ -16,4 +16,9 @@ export const popupCloseHandler = (setAction) => {
   document.body.style.minWidth = `320px`;
   window.scrollTo(0, parseInt(scrollY || `0`, RADIX) * -1);
   setAction(false);
+};
+
+export const getNumberFromString = (string, key) => {
+  const cutIndex = string.search(key);
+  return parseInt(string.slice(0, cutIndex - 1).replaceAll(/\s/g, ``), RADIX);
 };
