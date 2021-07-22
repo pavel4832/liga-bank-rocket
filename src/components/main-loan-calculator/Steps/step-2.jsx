@@ -1,26 +1,29 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import ErrorPopup from '../../error-popup/error-popup';
-import {
-  PRICES_DATA,
-  FIRST_PAYMENT_RATE,
-  LOAN_TERM,
-  LoanPurpose,
-  ERROR_TYPE,
-  PRICE_STEP,
-  Validations, RADIX
-} from '../../../const';
+import {PRICES_DATA, FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose, PRICE_STEP, RADIX} from '../../../const';
 import {changePrice, changeFirstPayment, changeLoanTerm} from '../../../store/actions';
-import Popup from "../../popup/popup";
-import {getNumberFromString, popupOpenHandler} from '../../../utils';
-import {useInput} from '../../../hooks/hooks';
+import {getNumberFromString} from '../../../utils';
 
 const Step2 = () => {
   const {purpose, price, firstPayment, loanTerm} = useSelector((state) => state.DATA);
   const [isPriceError, setPriceError] = useState(false);
   const [isPrice, setPrice] = useState(`${price.toLocaleString(`ru-RU`)} рублей`);
+  const [isFirstPayment, setPayment] = useState(`${(price * firstPayment / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`);
+  const [isLoanTerm, setLoanTerm] = useState(`${loanTerm.toLocaleString(`ru-RU`)} лет`);
+
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setPrice(`${price.toLocaleString(`ru-RU`)} рублей`);
+    setPayment(`${(price * firstPayment / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`);
+    setLoanTerm(`${loanTerm.toLocaleString(`ru-RU`)} лет`);
+  }, [purpose]);
+
+  const minPrice = (purpose === LoanPurpose.MORTGAGE) ? PRICES_DATA.START_MORTGAGE : PRICES_DATA.START_AUTO;
+  const maxPrice = (purpose === LoanPurpose.MORTGAGE) ? PRICES_DATA.END_MORTGAGE : PRICES_DATA.END_AUTO;
+  const priceStep = (purpose === LoanPurpose.MORTGAGE) ? PRICE_STEP.MORTGAGE : PRICE_STEP.AUTO;
+  const firstPaymentMin = (purpose === LoanPurpose.MORTGAGE) ? FIRST_PAYMENT_RATE.MORTGAGE : FIRST_PAYMENT_RATE.AUTO;
+  const minLoanTerm = (purpose === LoanPurpose.MORTGAGE) ? LOAN_TERM.MIN_MORTGAGE : LOAN_TERM.MIN_AUTO;
   const maxLoanTerm = (purpose === LoanPurpose.MORTGAGE) ? LOAN_TERM.MAX_MORTGAGE : LOAN_TERM.MAX_AUTO;
 
   const priceChangeHandler = (evt) => {
@@ -41,7 +44,7 @@ const Step2 = () => {
     } else {
       newPrice = parseInt(evt.target.value, RADIX);
     }
-    if (newPrice < PRICES_DATA.START || newPrice > PRICES_DATA.END) {
+    if (newPrice < minPrice || newPrice > maxPrice) {
       setPriceError(true);
     } else {
       setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
@@ -49,8 +52,8 @@ const Step2 = () => {
   };
 
   const priceDownClickHandler = () => {
-    const newPrice = price - PRICE_STEP;
-    if (newPrice < PRICES_DATA.START) {
+    const newPrice = price - priceStep;
+    if (newPrice < minPrice) {
       setPriceError(true);
     } else {
       setPriceError(false);
@@ -60,8 +63,8 @@ const Step2 = () => {
   };
 
   const priceUpClickHandler = () => {
-    const newPrice = price + PRICE_STEP;
-    if (newPrice > PRICES_DATA.END) {
+    const newPrice = price + priceStep;
+    if (newPrice > maxPrice) {
       setPriceError(true);
     } else {
       setPriceError(false);
@@ -71,13 +74,70 @@ const Step2 = () => {
   };
 
   const loanFirstPaymentHandler = (evt) => {
-    const newFirstPayment = evt.target.value;
-    dispatch(changeFirstPayment(newFirstPayment));
+    let newPayment;
+    if (evt.target.value.search(`рублей`) > 0) {
+      newPayment = getNumberFromString(evt.target.value, `рублей`);
+    } else {
+      newPayment = parseInt(evt.target.value, RADIX);
+    }
+    setPayment(`${newPayment.toString()}`);
+    dispatch(changeFirstPayment(newPayment * FIRST_PAYMENT_RATE.MAX / price));
+  };
+
+  const loanFirstPaymentCheckHandler = (evt) => {
+    let newPayment;
+    if (evt.target.value.search(`рублей`) > 0) {
+      newPayment = getNumberFromString(evt.target.value, `рублей`);
+    } else {
+      newPayment = parseInt(evt.target.value, RADIX);
+    }
+    let paymentRate = newPayment * FIRST_PAYMENT_RATE.MAX / price;
+    if (paymentRate < firstPaymentMin) {
+      paymentRate = firstPaymentMin;
+    } else if (paymentRate > FIRST_PAYMENT_RATE.MAX) {
+      paymentRate = FIRST_PAYMENT_RATE.MAX;
+    }
+    setPayment(`${(price * paymentRate / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`);
+    dispatch(changeFirstPayment(paymentRate));
+  };
+
+  const loanFirstPaymentRangeHandler = (evt) => {
+    const paymentRate = evt.target.value;
+    setPayment(`${(price * paymentRate / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`);
+    dispatch(changeFirstPayment(paymentRate));
   };
 
   const loanTermChangeHandler = (evt) => {
-    const newLoanTerm = evt.target.value;
-    dispatch(changeLoanTerm(newLoanTerm));
+    let newTerm;
+    if (evt.target.value.search(`лет`) > 0) {
+      newTerm = getNumberFromString(evt.target.value, `лет`);
+    } else {
+      newTerm = parseInt(evt.target.value, RADIX);
+    }
+    setLoanTerm(`${newTerm.toString()}`);
+    dispatch(changeLoanTerm(newTerm));
+  };
+
+  const loanTermCheckHandler = (evt) => {
+    let newTerm;
+    if (evt.target.value.search(`лет`) > 0) {
+      newTerm = getNumberFromString(evt.target.value, `лет`);
+    } else {
+      newTerm = parseInt(evt.target.value, RADIX);
+    }
+    if (newTerm < minLoanTerm) {
+      newTerm = minLoanTerm;
+    } else if (newTerm > maxLoanTerm) {
+      newTerm = maxLoanTerm;
+    }
+    setLoanTerm(`${newTerm.toLocaleString(`ru-RU`)} лет`);
+    dispatch(changeLoanTerm(newTerm));
+  };
+
+  const loanTermRangeChangeHandler = (evt) => {
+    const newTerm = evt.target.value;
+    setLoanTerm(`${newTerm.toLocaleString(`ru-RU`)} лет`);
+    dispatch(changeLoanTerm(newTerm));
   };
 
   return (
@@ -112,48 +172,50 @@ const Step2 = () => {
             <path d="M0 8H16M8 0V16" stroke="#1F1E25" strokeWidth="2"/>
           </svg>
         </button>
-        <span className="step__comments">От {PRICES_DATA.START.toLocaleString(`ru-RU`)}  до {PRICES_DATA.END.toLocaleString(`ru-RU`)} рублей</span>
+        <span className="step__comments">От {minPrice.toLocaleString(`ru-RU`)}  до {maxPrice.toLocaleString(`ru-RU`)} рублей</span>
       </label>
       <label className="step__label">
         Первоначальный взнос
         <input
-          value={`${(price * firstPayment / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`}
+          value={isFirstPayment}
           className="step__field step2__field"
           type="text"
           name="firstPayment"
           onChange={loanFirstPaymentHandler}
+          onBlur={loanFirstPaymentCheckHandler}
         />
         <input
           className="step__range"
           type="range"
-          min={`${FIRST_PAYMENT_RATE.MIN}`}
+          min={`${firstPaymentMin}`}
           max="100"
-          step="1"
+          step="5"
           value={`${firstPayment}`}
-          onChange={loanFirstPaymentHandler}
+          onChange={loanFirstPaymentRangeHandler}
         />
-        <span className="step__comments">{FIRST_PAYMENT_RATE.MIN.toLocaleString(`ru-RU`)}%</span>
+        <span className="step__comments">{firstPaymentMin.toLocaleString(`ru-RU`)}%</span>
       </label>
       <label className="step__label">
         Срок кредитования
         <input
-          value={`${loanTerm.toLocaleString(`ru-RU`)} лет`}
+          value={isLoanTerm}
           className="step__field step2__field"
           type="text"
           name="loanTerm"
           onChange={loanTermChangeHandler}
+          onBlur={loanTermCheckHandler}
         />
         <input
           className="step__range"
           type="range"
-          min={`${LOAN_TERM.MIN}`}
+          min={`${minLoanTerm}`}
           max={`${maxLoanTerm}`}
-          step="5"
+          step="1"
           value={`${loanTerm}`}
-          onChange={loanTermChangeHandler}
+          onChange={loanTermRangeChangeHandler}
         />
         <div className="step__comments-list">
-          <span className="step__comments">{LOAN_TERM.MIN.toLocaleString(`ru-RU`)} лет</span>
+          <span className="step__comments">{minLoanTerm.toLocaleString(`ru-RU`)} лет</span>
           <span className="step__comments">{maxLoanTerm.toLocaleString(`ru-RU`)} лет</span>
         </div>
       </label>

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {LoanPurpose, PurposeValue} from '../../../const';
+import {FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose, PRICES_DATA, PurposeValue} from '../../../const';
 import {useDispatch} from 'react-redux';
-import {changePurpose} from '../../../store/actions';
+import {changePurpose, changePrice, changeFirstPayment, changeLoanTerm} from '../../../store/actions';
 
 const Step1 = () => {
   const [isClose, setClose] = useState(false);
@@ -16,8 +16,14 @@ const Step1 = () => {
   const choiceClickHandler = (evt) => {
     evt.preventDefault();
     const choice = evt.target.dataset.choice;
+    const price = (choice === LoanPurpose.MORTGAGE) ? PRICES_DATA.START_MORTGAGE : PRICES_DATA.START_AUTO;
+    const firstPayment = (choice === LoanPurpose.MORTGAGE) ? FIRST_PAYMENT_RATE.MORTGAGE : FIRST_PAYMENT_RATE.AUTO;
+    const loanTerm = (choice === LoanPurpose.MORTGAGE) ? LOAN_TERM.MIN_MORTGAGE : LOAN_TERM.MIN_AUTO;
     purpose.current.value = PurposeValue[choice];
     dispatch(changePurpose(choice));
+    dispatch(changePrice(price));
+    dispatch(changeFirstPayment(firstPayment));
+    dispatch(changeLoanTerm(loanTerm));
     openPurposeHandler();
   };
 

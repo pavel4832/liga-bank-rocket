@@ -73,21 +73,28 @@ export const PurposeValue = {
 };
 
 export const PRICES_DATA = {
-  START: 1200000,
-  END: 25000000,
+  START_MORTGAGE: 1200000,
+  END_MORTGAGE: 25000000,
+  START_AUTO: 500000,
+  END_AUTO: 5000000,
 };
 
-export const PRICE_STEP = 100000;
+export const PRICE_STEP = {
+  MORTGAGE: 100000,
+  AUTO: 50000,
+};
 
 export const FIRST_PAYMENT_RATE = {
-  MIN: 10,
-  MAX: 100
+  MORTGAGE: 10,
+  AUTO: 20,
+  MAX: 100,
 };
 
 export const LOAN_TERM = {
-  MIN: 5,
+  MIN_MORTGAGE: 5,
+  MIN_AUTO: 1,
   MAX_MORTGAGE: 30,
-  MAX_AUTO: 30,
+  MAX_AUTO: 5,
 };
 
 export const ERROR_TYPE = {

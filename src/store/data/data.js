@@ -1,15 +1,14 @@
 import * as actions from '../actions';
 import {createReducer} from '@reduxjs/toolkit';
-import {FIRST_PAYMENT_RATE, LOAN_TERM, MENU_TYPE, PRICES_DATA} from '../../const';
+import {MENU_TYPE} from '../../const';
 
 const initialState = {
   menuType: MENU_TYPE.SERVICES,
   purpose: ``,
-  price: PRICES_DATA.START,
-  firstPayment: FIRST_PAYMENT_RATE.MIN,
-  loanTerm: LOAN_TERM.MIN,
+  price: ``,
+  firstPayment: ``,
+  loanTerm: ``,
 };
-
 const DATA = createReducer(initialState, (builder) => {
   builder.addCase(actions.changeMenu, (state, action) => {
     return {
