@@ -144,7 +144,7 @@ const Step2 = () => {
     <div className="loan-calculator__step2 step step2">
       <h3 className="step__title">Шаг 2. Введите параметры кредита</h3>
       <label className="step__label">
-        Стоимость недвижимости
+        {(purpose === LoanPurpose.MORTGAGE) ? `Стоимость недвижимости` : `Стоимость автомобиля`}
         <button
           className="step__button button button--decrease"
           aria-label="Увеличить"

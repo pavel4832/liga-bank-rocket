@@ -97,12 +97,17 @@ export const LOAN_TERM = {
   MAX_AUTO: 5,
 };
 
-export const ERROR_TYPE = {
-  PRICE: `price`,
-  LOAN: `loan`,
-};
+export const MOTHER = 470000;
 
-export const ERROR_MESSAGE = {
-  PRICE: `Цена не может быть за пределами указанного диапазона.`,
-  LOAN: `Наш банк не выдаёт ипотечные кредиты меньше 500 000 рублей.`,
+export const MIN_FIRST_PAYMENT_RATE = 15;
+
+export const MONTHS = 12;
+
+export const AUTO_PRICE_RATE = 2000000;
+
+export const SALARY_RATE = 45;
+
+export const LOAN_AMOUNT_MIN = {
+  MORTGAGE: 500000,
+  AUTO: 200000,
 };

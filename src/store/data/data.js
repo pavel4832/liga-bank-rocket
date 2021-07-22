@@ -8,6 +8,8 @@ const initialState = {
   price: ``,
   firstPayment: ``,
   loanTerm: ``,
+  offerNumber: 0,
+  offer: {},
   isMother: false,
   isInsuranceAuto: false,
   isInsuranceLive: false,
@@ -59,6 +61,31 @@ const DATA = createReducer(initialState, (builder) => {
     return {
       ...state,
       isInsuranceLive: action.payload,
+    };
+  });
+  builder.addCase(actions.setNewOffer, (state, action) => {
+    return {
+      ...state,
+      offer: action.payload,
+    };
+  });
+  builder.addCase(actions.changeOfferNumber, (state, action) => {
+    return {
+      ...state,
+      offerNumber: action.payload,
+    };
+  });
+  builder.addCase(actions.resetCalculator, (state) => {
+    return {
+      ...state,
+      purpose: ``,
+      price: ``,
+      firstPayment: ``,
+      loanTerm: ``,
+      offer: {},
+      isMother: false,
+      isInsuranceAuto: false,
+      isInsuranceLive: false,
     };
   });
 });

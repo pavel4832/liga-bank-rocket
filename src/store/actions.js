@@ -10,6 +10,9 @@ export const ActionType = {
   CHANGE_MOTHER_MONEY: `data/changeMotherMoney`,
   CHANGE_INSURANCE_AUTO: `data/changeInsuranceAuto`,
   CHANGE_INSURANCE_LIVE: `data/changeInsuranceLive`,
+  SET_NEW_OFFER: `data/setNewOffer`,
+  CHANGE_OFFER_NUMBER: `data/changeOfferNumber`,
+  RESET_CALCULATOR: `data/resetCalculator`
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
@@ -49,20 +52,34 @@ export const changeLoanTerm = createAction(ActionType.CHANGE_LOAN_TERM, (newLoan
 });
 
 
-export const changeMotherMoney = createAction(ActionType.CHANGE_MOTHER_MONEY, (newLoanTerm) => {
+export const changeMotherMoney = createAction(ActionType.CHANGE_MOTHER_MONEY, (newMotherMoney) => {
   return {
-    payload: newLoanTerm,
+    payload: newMotherMoney,
   };
 });
 
-export const changeInsuranceAuto = createAction(ActionType.CHANGE_INSURANCE_AUTO, (newLoanTerm) => {
+export const changeInsuranceAuto = createAction(ActionType.CHANGE_INSURANCE_AUTO, (newInsuranceAuto) => {
   return {
-    payload: newLoanTerm,
+    payload: newInsuranceAuto,
   };
 });
 
-export const changeInsuranceLive = createAction(ActionType.CHANGE_INSURANCE_LIVE, (newLoanTerm) => {
+export const changeInsuranceLive = createAction(ActionType.CHANGE_INSURANCE_LIVE, (newInsuranceLive) => {
   return {
-    payload: newLoanTerm,
+    payload: newInsuranceLive,
   };
 });
+
+export const setNewOffer = createAction(ActionType.SET_NEW_OFFER, (newOffer) => {
+  return {
+    payload: newOffer,
+  };
+});
+
+export const changeOfferNumber = createAction(ActionType.CHANGE_OFFER_NUMBER, (newNumber) => {
+  return {
+    payload: newNumber,
+  };
+});
+
+export const resetCalculator = createAction(ActionType.RESET_CALCULATOR);

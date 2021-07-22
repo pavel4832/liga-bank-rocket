@@ -1,14 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Step1 from './Steps/step-1';
 import Step2 from './Steps/step-2';
 import Step3 from './Steps/step-3';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Offer from './Offer/offer';
+import Popup from '../popup/popup';
+import SubmitPopup from '../submit-popup/submit-popup';
+import {changeOfferNumber, resetCalculator} from '../../store/actions';
 
 const MainLoanCalculator = () => {
-  const {purpose} = useSelector((state) => state.DATA);
+  const {purpose, offer} = useSelector((state) => state.DATA);
   const [isOffer, setOffer] = useState(false);
-  const [isComplete, setComplete] = useState(true);
+  const [isComplete, setComplete] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeOfferNumber(offer.id));
+    dispatch(resetCalculator());
+  }, [isComplete]);
 
   return (
     <section className="page-main__loan loan-calculator">
@@ -18,7 +28,10 @@ const MainLoanCalculator = () => {
           <Step1 />
           {(purpose) && <Step2 />}
           {(purpose) && <Offer setActive={setOffer} />}
-          {(isOffer) && <Step3 setActive={setOffer} />}
+          {(isOffer) && <Step3 setActive={setOffer} openPopup={setComplete} />}
+          {(isComplete) && <Popup name={`step3`} active={isComplete} setActive={setComplete}>
+            <SubmitPopup setActive={setComplete} />
+          </Popup>}
         </div>
       </div>
     </section>

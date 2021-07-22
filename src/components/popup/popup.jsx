@@ -9,7 +9,7 @@ const Popup = (props) => {
   const onKeydown = (evt) => {
     switch (evt.key) {
       case KeyName.ESC:
-        setActive(false);
+        popupCloseHandler(setActive);
         break;
     }
   };

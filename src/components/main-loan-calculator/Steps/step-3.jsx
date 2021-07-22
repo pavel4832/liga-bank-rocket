@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useInput} from '../../../hooks/hooks';
 import {Validations} from '../../../const';
-import Popup from '../../popup/popup';
+import {useSelector} from 'react-redux';
 
 const Step3 = (props) => {
-  const {setActive} = props;
+  const {setActive, openPopup} = props;
+  const {offer} = useSelector((state) => state.DATA);
   const [isError, setError] = useState(false);
-  const [isSubmit, setSubmit] = useState(false);
   const name = useInput(``, Validations.IS_EMPTY);
   const phone = useInput(``, Validations.IS_EMPTY);
   const mail = useInput(``, Validations.IS_EMPTY);
@@ -22,12 +22,11 @@ const Step3 = (props) => {
     evt.preventDefault();
     if (name.isEmpty || phone.isEmpty || mail.isEmpty) {
       setError(true);
-      setSubmit(false);
     } else {
       setError(false);
       resetForm();
-      setSubmit(true);
       setActive(false);
+      openPopup(true);
     }
   };
 
@@ -37,23 +36,23 @@ const Step3 = (props) => {
       <ul className="step3__list">
         <li className="step3__item">
           <span className="step3__name">Номер заявки</span>
-          <span className="step3__data">№ 0010</span>
+          <span className="step3__data">{`№ ${String(`0000` + offer.id).slice(-4)}`}</span>
         </li>
         <li className="step3__item">
           <span className="step3__name">Цель кредита</span>
-          <span className="step3__data">Ипотека</span>
+          <span className="step3__data">{offer.loanPurpose}</span>
         </li>
         <li className="step3__item">
           <span className="step3__name">Стоимость недвижимости</span>
-          <span className="step3__data">2 000 000 рублей</span>
+          <span className="step3__data">{`${offer.loanPrice.toLocaleString(`ru-RU`)} рублей`}</span>
         </li>
         <li className="step3__item">
           <span className="step3__name">Первоначальный взнос</span>
-          <span className="step3__data">200 000 рублей</span>
+          <span className="step3__data">{`${offer.loanFirstPayment.toLocaleString(`ru-RU`)} рублей`}</span>
         </li>
         <li className="step3__item">
           <span className="step3__name">Срок кредитования</span>
-          <span className="step3__data">5 лет</span>
+          <span className="step3__data">{`${offer.loanTime.toLocaleString(`ru-RU`)} лет`}</span>
         </li>
       </ul>
       <form className="step3__input-wrapper" action="https://echo.htmlacademy.ru" noValidate={true} onSubmit={handleSubmit}>
@@ -102,15 +101,13 @@ const Step3 = (props) => {
         </label>
         <button className="step3__submit button" type="submit">Отправить</button>
       </form>
-      {(isSubmit) && <Popup name={`step3`} active={isSubmit} setActive={setSubmit}>
-
-      </Popup>}
     </div>
   );
 };
 
 Step3.propTypes = {
   setActive: PropTypes.func.isRequired,
+  openPopup: PropTypes.func.isRequired,
 };
 
 export default Step3;

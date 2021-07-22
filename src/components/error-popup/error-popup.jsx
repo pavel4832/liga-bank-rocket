@@ -1,25 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {ERROR_TYPE, ERROR_MESSAGE} from '../../const';
+import {useSelector} from 'react-redux';
+import {LOAN_AMOUNT_MIN, LoanPurpose} from '../../const';
 
-const ErrorPopup = (props) => {
-  const {type} = props;
-  const errorMessage = (type === ERROR_TYPE.LOAN) ? ERROR_MESSAGE.LOAN : ERROR_MESSAGE.PRICE;
+const ErrorPopup = () => {
+  const {purpose} = useSelector((state) => state.DATA);
+
+  const loanType = (purpose === LoanPurpose.MORTGAGE) ? `ипотечные кредиты` : `автокредиты`;
+  const loanAmountMin = (purpose === LoanPurpose.MORTGAGE) ? LOAN_AMOUNT_MIN.MORTGAGE : LOAN_AMOUNT_MIN.AUTO;
 
   return (
     <div className="step2__error popup-error" onClick={(evt) => evt.stopPropagation()}>
       <p className="popup-error__message">
-        {errorMessage}
+        Наш банк не выдаёт {loanType} меньше {loanAmountMin.toLocaleString(`ru-RU`)} рублей.
       </p>
       <p className="popup-error__text">
         Попробуйте использовать другие параметры для расчёта.
       </p>
     </div>
   );
-};
-
-ErrorPopup.propTypes = {
-  type: PropTypes.string.isRequired,
 };
 
 export default ErrorPopup;
