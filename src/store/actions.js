@@ -7,6 +7,9 @@ export const ActionType = {
   CHANGE_PRICE: `data/changePrice`,
   CHANGE_FIRST_PAYMENT: `data/changeFirstPayment`,
   CHANGE_LOAN_TERM: `data/changeLoanTerm`,
+  CHANGE_MOTHER_MONEY: `data/changeMotherMoney`,
+  CHANGE_INSURANCE_AUTO: `data/changeInsuranceAuto`,
+  CHANGE_INSURANCE_LIVE: `data/changeInsuranceLive`,
 };
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
@@ -40,6 +43,25 @@ export const changeFirstPayment = createAction(ActionType.CHANGE_FIRST_PAYMENT, 
 });
 
 export const changeLoanTerm = createAction(ActionType.CHANGE_LOAN_TERM, (newLoanTerm) => {
+  return {
+    payload: newLoanTerm,
+  };
+});
+
+
+export const changeMotherMoney = createAction(ActionType.CHANGE_MOTHER_MONEY, (newLoanTerm) => {
+  return {
+    payload: newLoanTerm,
+  };
+});
+
+export const changeInsuranceAuto = createAction(ActionType.CHANGE_INSURANCE_AUTO, (newLoanTerm) => {
+  return {
+    payload: newLoanTerm,
+  };
+});
+
+export const changeInsuranceLive = createAction(ActionType.CHANGE_INSURANCE_LIVE, (newLoanTerm) => {
   return {
     payload: newLoanTerm,
   };

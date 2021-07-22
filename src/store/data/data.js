@@ -8,6 +8,9 @@ const initialState = {
   price: ``,
   firstPayment: ``,
   loanTerm: ``,
+  isMother: false,
+  isInsuranceAuto: false,
+  isInsuranceLive: false,
 };
 const DATA = createReducer(initialState, (builder) => {
   builder.addCase(actions.changeMenu, (state, action) => {
@@ -38,6 +41,24 @@ const DATA = createReducer(initialState, (builder) => {
     return {
       ...state,
       loanTerm: action.payload,
+    };
+  });
+  builder.addCase(actions.changeMotherMoney, (state, action) => {
+    return {
+      ...state,
+      isMother: action.payload,
+    };
+  });
+  builder.addCase(actions.changeInsuranceAuto, (state, action) => {
+    return {
+      ...state,
+      isInsuranceAuto: action.payload,
+    };
+  });
+  builder.addCase(actions.changeInsuranceLive, (state, action) => {
+    return {
+      ...state,
+      isInsuranceLive: action.payload,
     };
   });
 });

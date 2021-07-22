@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {PRICES_DATA, FIRST_PAYMENT_RATE, LOAN_TERM, LoanPurpose, PRICE_STEP, RADIX} from '../../../const';
-import {changePrice, changeFirstPayment, changeLoanTerm} from '../../../store/actions';
+import {changePrice, changeFirstPayment, changeLoanTerm, changeMotherMoney, changeInsuranceAuto, changeInsuranceLive} from '../../../store/actions';
 import {getNumberFromString} from '../../../utils';
 
 const Step2 = () => {
-  const {purpose, price, firstPayment, loanTerm} = useSelector((state) => state.DATA);
+  const {purpose, price, firstPayment, loanTerm, isMother, isInsuranceAuto, isInsuranceLive} = useSelector((state) => state.DATA);
   const [isPriceError, setPriceError] = useState(false);
   const [isPrice, setPrice] = useState(`${price.toLocaleString(`ru-RU`)} рублей`);
   const [isFirstPayment, setPayment] = useState(`${(price * firstPayment / FIRST_PAYMENT_RATE.MAX).toLocaleString(`ru-RU`)} рублей`);
@@ -219,15 +219,44 @@ const Step2 = () => {
           <span className="step__comments">{maxLoanTerm.toLocaleString(`ru-RU`)} лет</span>
         </div>
       </label>
-      <input
-        id="step-checkbox"
-        className="step__checkbox visually-hidden"
-        type="checkbox"
-        name="mother"
-      />
-      <label htmlFor="step-checkbox" className="step__label step__label--checkbox">
-        Использовать материнский капитал
-      </label>
+      {(purpose === LoanPurpose.MORTGAGE) && (
+        <div className="step__checkbox-wrapper">
+          <input
+            id="step-checkbox-mother"
+            className="step__checkbox visually-hidden"
+            type="checkbox"
+            name="mother"
+            onChange={() => dispatch(changeMotherMoney(!isMother))}
+          />
+          <label htmlFor="step-checkbox-mother" className="step__label step__label--checkbox">
+            Использовать материнский капитал
+          </label>
+        </div>
+      )}
+      {(purpose === LoanPurpose.AUTO) && (
+        <div className="step__checkbox-wrapper">
+          <input
+            id="step-checkbox-auto"
+            className="step__checkbox visually-hidden"
+            type="checkbox"
+            name="mother"
+            onChange={() => dispatch(changeInsuranceAuto(!isInsuranceAuto))}
+          />
+          <label htmlFor="step-checkbox-auto" className="step__label step__label--checkbox">
+            Оформить КАСКО в нашем банке
+          </label>
+          <input
+            id="step-checkbox-live"
+            className="step__checkbox visually-hidden"
+            type="checkbox"
+            name="mother"
+            onChange={() => dispatch(changeInsuranceLive(!isInsuranceLive))}
+          />
+          <label htmlFor="step-checkbox-live" className="step__label step__label--checkbox">
+            Оформить Страхование жизни в нашем банке
+          </label>
+        </div>
+      )}
     </div>
   );
 };
