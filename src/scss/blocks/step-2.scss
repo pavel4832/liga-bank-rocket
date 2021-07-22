@@ -1,5 +1,11 @@
 .step2 {
   margin-top: 17px;
+  @media screen and(max-width: $tablet) {
+    margin-top: 32px;
+  }
+  @media screen and(max-width: $mobile) {
+    margin-top: 22px;
+  }
 }
 
 .step2__field {

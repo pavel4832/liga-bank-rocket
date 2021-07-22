@@ -3,7 +3,7 @@ import Step1 from './Steps/step-1';
 import Step2 from './Steps/step-2';
 import Step3 from './Steps/step-3';
 import {useSelector} from 'react-redux';
-import Offer from './Offer/offer'
+import Offer from './Offer/offer';
 
 const MainLoanCalculator = () => {
   const {purpose} = useSelector((state) => state.DATA);

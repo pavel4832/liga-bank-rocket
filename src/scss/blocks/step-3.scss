@@ -12,6 +12,19 @@
   background-color: $background-pink;
   border-radius: 4px;
   border: none;
+  @media screen and(max-width: $tablet) {
+    height: 652px;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 55px;
+    background-color: $background-white;
+  }
+  @media screen and(max-width: $mobile) {
+    max-width: 290px;
+    height: 797px;
+    padding-top: 43px;
+  }
 }
 
 .step3__title {
@@ -22,6 +35,13 @@
   font-size: 22px;
   line-height: 140%;
   color: $black;
+  @media screen and(max-width: $tablet) {
+    margin: 0;
+    font-size: 18px;
+  }
+  @media screen and(max-width: $mobile) {
+    font-size: 16px;
+  }
 }
 
 .step3__list {
@@ -30,6 +50,12 @@
   margin: 13px 0 0;
   padding: 0;
   width: 100%;
+  @media screen and(max-width: $tablet) {
+    margin: 26px 0 0;
+  }
+  @media screen and(max-width: $mobile) {
+    margin: 34px 0 0;
+  }
 }
 
 .step3__item {
@@ -38,6 +64,15 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid $border-gray;
+  @media screen and(max-width: $mobile) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
  }
 
 .step3__name {
@@ -47,6 +82,10 @@
   font-size: 16px;
   line-height: 54px;
   color: $label-black;
+  @media screen and(max-width: $mobile) {
+    margin-bottom: 13px;
+    line-height: 140%;
+  }
 }
 
 .step3__data {
@@ -56,12 +95,19 @@
   font-size: 22px;
   line-height: 54px;
   color: $black;
+  @media screen and(max-width: $mobile) {
+    font-size: 18px;
+    line-height: 140%;
+  }
 }
 
 .step3__input-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  @media screen and(max-width: $mobile) {
+    margin-top: 10px;
+  }
 }
 
 .step3__label {
@@ -92,18 +138,44 @@
   &::placeholder {
     color: $footer-gray;
   }
+  @media screen and(max-width: $tablet) {
+    background-color: $background-white;
+  }
+  @media screen and(max-width: $mobile) {
+    margin-top: 20px;
+    padding-left: 15px;
+    font-size: 16px;
+  }
 }
 
 .name-field {
   width: 630px;
+  @media screen and(max-width: $tablet) {
+    width: 678px;
+  }
+  @media screen and(max-width: $mobile) {
+    width: 290px;
+  }
 }
 
 .phone-field {
   width: 300px;
+  @media screen and(max-width: $tablet) {
+    width: 324px;
+  }
+  @media screen and(max-width: $mobile) {
+    width: 290px;
+  }
 }
 
 .mail-field {
   width: 300px;
+  @media screen and(max-width: $tablet) {
+    width: 324px;
+  }
+  @media screen and(max-width: $mobile) {
+    width: 290px;
+  }
 }
 
 .step3__errorText {
@@ -132,4 +204,12 @@
   text-align: center;
   background: $blue;
   cursor: pointer;
+  @media screen and(max-width: $tablet) {
+    width: 678px;
+  }
+  @media screen and(max-width: $mobile) {
+    width: 290px;
+    margin: 29px auto 0;
+    font-size: 14px;
+  }
 }
