@@ -22,3 +22,16 @@ export const getNumberFromString = (string, key) => {
   const cutIndex = string.search(key);
   return parseInt(string.slice(0, cutIndex - 1).replaceAll(/\s/g, ``), RADIX);
 };
+
+export const onMenuLinkClick = (evt) => {
+  const menuLink = evt.target;
+  if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
+    const gotoBlock = document.querySelector(menuLink.dataset.goto);
+    const gotoBlockValue = gotoBlock.getBoundingClientRect().top + pageYOffset - document.querySelector(`header`).offsetHeight;
+    window.scrollTo({
+      top: gotoBlockValue,
+      behavior: `smooth`
+    });
+    evt.preventDefault();
+  }
+};

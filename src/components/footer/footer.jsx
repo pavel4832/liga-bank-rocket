@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {AppRoute, MENU_TYPE} from "../../const";
 import {changeMenu} from "../../store/actions";
 import {useDispatch} from "react-redux";
-
+import {onMenuLinkClick} from '../../utils';
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -33,16 +33,34 @@ const Footer = () => {
             <div className="page-footer__menu">
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link to={AppRoute.ROOT} className="page-footer__link">Услуги</Link>
+                  <Link
+                    to={AppRoute.ROOT}
+                    className="page-footer__link"
+                    data-goto=".page-main__services"
+                    onClick={(evt) => onMenuLinkClick(evt)}
+                  >Услуги</Link>
                 </li>
                 <li className="page-footer__item">
-                  <Link to={AppRoute.ROOT} className="page-footer__link">Рассчитать&nbsp;кредит</Link>
+                  <Link
+                    to={AppRoute.ROOT}
+                    className="page-footer__link"
+                    data-goto=".page-main__loan"
+                    onClick={(evt) => onMenuLinkClick(evt)}
+                  >Рассчитать&nbsp;кредит</Link>
                 </li>
                 <li className="page-footer__item">
-                  <Link to={AppRoute.ROOT} className="page-footer__link">Контакты</Link>
+                  <Link
+                    to={AppRoute.ROOT}
+                    className="page-footer__link"
+                    data-goto=".page-main__contact"
+                    onClick={(evt) => onMenuLinkClick(evt)}
+                  >Контакты</Link>
                 </li>
                 <li className="page-footer__item">
-                  <Link to={AppRoute.QUESTIONS} className="page-footer__link">Задать вопрос</Link>
+                  <Link
+                    to={AppRoute.QUESTIONS}
+                    className="page-footer__link"
+                  >Задать вопрос</Link>
                 </li>
               </ul>
             </div>
