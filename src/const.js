@@ -3,7 +3,10 @@ import React from "react";
 export const AppRoute = {
   ROOT: `/`,
   CONVERTER: `/converter`,
-  QUESTIONS: `/questions`
+  QUESTIONS: `/questions`,
+  DEPOSIT: `/deposit`,
+  INSURANCE: `/insurance`,
+  ONLINE: `/online`
 };
 
 export const AuthorizationStatus = {

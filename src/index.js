@@ -7,9 +7,12 @@ import {Router as BrowserRouter} from 'react-router-dom';
 import App from './components/app/app';
 import rootReducer from './store/root-reducer';
 import browserHistory from './browser-history';
+import {redirect} from './store/middlewares/redirect';
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(redirect)
 });
 
 ReactDOM.render(

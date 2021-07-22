@@ -1,6 +1,11 @@
 import React from 'react';
+import {redirectToRoute} from '../../../store/actions';
+import {useDispatch} from 'react-redux';
+import {AppRoute} from '../../../const';
 
 const Tabs4 = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className="services__content tabs">
       <div className="container">
@@ -9,7 +14,12 @@ const Tabs4 = () => {
             <h2 className="tabs__title">Лига Банк — это огромное количество онлайн-сервисов для&nbsp;вашего удобства</h2>
             <p className="tabs__text">Мобильный банк,<br/> который всегда под рукой</p>
             <p className="tabs__text">Приложение Лига-проездной позволит вам оплачивать билеты&nbsp;по всему миру</p>
-            <button className="tabs__button button">Узнать подробнее</button>
+            <button
+              className="tabs__button button"
+              onClick={() => {
+                dispatch(redirectToRoute(AppRoute.ONLINE));
+              }}
+            >Узнать подробнее</button>
           </div>
           <div className="tabs__image">
             <picture>
