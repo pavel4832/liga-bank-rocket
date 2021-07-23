@@ -3,6 +3,7 @@ import {Validators} from '../const';
 
 const useValidation = (value, validations) => {
   const [isEmpty, setEmpty] = useState(true);
+  const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
     for (const validation in validations) {
@@ -15,13 +16,22 @@ const useValidation = (value, validations) => {
               setEmpty(true);
             }
             break;
+          case Validators.IS_EMAIL:
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (re.test(String(value).toLowerCase())) {
+              setEmailError(false);
+            } else {
+              setEmailError(true);
+            }
+            break;
         }
       }
     }
   }, [value]);
 
   return {
-    isEmpty
+    isEmpty,
+    emailError
   };
 };
 
