@@ -13,6 +13,7 @@ import {
 } from '../../../const';
 import Popup from '../../popup/popup';
 import ErrorPopup from '../../error-popup/error-popup';
+import {popupOpenHandler} from "../../../utils";
 
 const Offer = (props) => {
   const {setActive} = props;
@@ -63,13 +64,13 @@ const Offer = (props) => {
   useEffect(() => {
     if (purpose === LoanPurpose.MORTGAGE) {
       if (loanAmount < MinLoanAmount.MORTGAGE) {
-        setError(true);
+        popupOpenHandler(setError);
       } else {
         setError(false);
       }
     } else {
       if (loanAmount < MinLoanAmount.AUTO) {
-        setError(true);
+        popupOpenHandler(setError);
       } else {
         setError(false);
       }
@@ -86,7 +87,7 @@ const Offer = (props) => {
     };
     if (purpose === LoanPurpose.MORTGAGE) {
       if (loanAmount < MinLoanAmount.MORTGAGE) {
-        setError(true);
+        popupOpenHandler(setError);
       } else {
         setError(false);
         dispatch(setNewOffer(offer));
@@ -94,7 +95,7 @@ const Offer = (props) => {
       }
     } else {
       if (loanAmount < MinLoanAmount.AUTO) {
-        setError(true);
+        popupOpenHandler(setError);
       } else {
         setError(false);
         dispatch(setNewOffer(offer));

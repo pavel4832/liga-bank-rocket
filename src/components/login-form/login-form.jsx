@@ -10,8 +10,8 @@ const LoginForm = (props) => {
   const {setActive} = props;
   const [isError, setError] = useState(false);
   const [isView, setView] = useState(false);
-  const name = useInput(``, Validation.IS_EMPTY);
-  const password = useInput(``, Validation.IS_EMPTY);
+  const name = useInput(localStorage.getItem(`login`), Validation.IS_EMPTY);
+  const password = useInput(localStorage.getItem(`password`), Validation.IS_EMPTY);
 
   const dispatch = useDispatch();
 
@@ -32,6 +32,8 @@ const LoginForm = (props) => {
     } else {
       setError(false);
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      localStorage.setItem(`login`, name.value);
+      localStorage.setItem(`password`, password.value);
       formCloseHandler();
     }
   };

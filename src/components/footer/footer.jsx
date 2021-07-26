@@ -34,26 +34,29 @@ const Footer = () => {
               <ul className="page-footer__list">
                 <li className="page-footer__item">
                   <a
-                    href="#"
+                    href="#services-goto"
                     className="page-footer__link"
-                    data-goto=".page-main__services"
-                    onClick={(evt) => onMenuLinkClick(evt)}
+                    onClick={(evt) => {
+                      onMenuLinkClick(evt);
+                    }}
                   >Услуги</a>
                 </li>
                 <li className="page-footer__item">
                   <a
-                    href="#"
+                    href="#loan-goto"
                     className="page-footer__link"
-                    data-goto=".page-main__loan"
-                    onClick={(evt) => onMenuLinkClick(evt)}
+                    onClick={(evt) => {
+                      onMenuLinkClick(evt);
+                    }}
                   >Рассчитать&nbsp;кредит</a>
                 </li>
                 <li className="page-footer__item">
                   <a
-                    href="#"
+                    href="#contact-goto"
                     className="page-footer__link"
-                    data-goto=".page-main__contact"
-                    onClick={(evt) => onMenuLinkClick(evt)}
+                    onClick={(evt) => {
+                      onMenuLinkClick(evt);
+                    }}
                   >Контакты</a>
                 </li>
                 <li className="page-footer__item">

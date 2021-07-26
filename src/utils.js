@@ -24,14 +24,24 @@ export const getNumberFromString = (string, key) => {
 };
 
 export const onMenuLinkClick = (evt) => {
-  const menuLink = evt.target;
-  if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
-    const gotoBlock = document.querySelector(menuLink.dataset.goto);
-    const gotoBlockValue = gotoBlock.getBoundingClientRect().top + pageYOffset - document.querySelector(`header`).offsetHeight;
-    window.scrollTo({
-      top: gotoBlockValue,
-      behavior: `smooth`
-    });
-    evt.preventDefault();
-  }
+  evt.preventDefault();
+  const href = evt.target.getAttribute(`href`).substring(1);
+  const scrollTarget = document.getElementById(href);
+  const topOffset = document.querySelector(`header`).offsetHeight;
+  const elementPosition = scrollTarget.getBoundingClientRect().top;
+  const offsetPosition = elementPosition - topOffset;
+
+  window.scrollBy({
+    top: offsetPosition,
+    behavior: `smooth`
+  });
+};
+
+export const completePopupOpen = (setAction) => {
+  const goTo = document.querySelector(`#loan-goto`);
+  const gotoBlockValue = goTo.getBoundingClientRect().top + pageYOffset - document.querySelector(`header`).offsetHeight;
+  window.scrollTo({
+    top: gotoBlockValue
+  });
+  popupOpenHandler(setAction);
 };

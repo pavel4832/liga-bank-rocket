@@ -61,12 +61,11 @@ const HeaderMenu = (props) => {
       <ul className="page-menu__list">
         <li className="page-menu__item">
           <a
-            href="#"
+            href="#services-goto"
             className={`page-menu__link ${servicesActiveLink}`}
-            data-goto=".page-main__services"
             onClick={(evt)=> {
-              onMenuLinkClick(evt);
               dispatch(changeMenu(MenuType.SERVICES));
+              onMenuLinkClick(evt);
             }}
           >
             Услуги
@@ -74,12 +73,11 @@ const HeaderMenu = (props) => {
         </li>
         <li className="page-menu__item">
           <a
-            href="#"
+            href="#loan-goto"
             className={`page-menu__link ${loanActiveLink}`}
-            data-goto=".page-main__loan"
             onClick={(evt)=> {
-              onMenuLinkClick(evt);
               dispatch(changeMenu(MenuType.LOAN));
+              onMenuLinkClick(evt);
             }}
           >
             Рассчитать кредит
@@ -98,12 +96,11 @@ const HeaderMenu = (props) => {
         </li>
         <li className="page-menu__item">
           <a
-            href="#"
+            href="#contact-goto"
             className={`page-menu__link ${contactActiveLink}`}
-            data-goto=".page-main__contact"
             onClick={(evt)=> {
-              onMenuLinkClick(evt);
               dispatch(changeMenu(MenuType.CONTACT));
+              onMenuLinkClick(evt);
             }}
           >
             Контакты

@@ -129,10 +129,14 @@
 }
 
 .slide__button {
+  display: flex;
+  justify-content: center;
   width: 234px;
   margin-top: 34px;
   font-size: 18px;
   line-height: 53px;
+  background-color: $white;
+  color: $black;
   @media screen and(max-width: $tablet) {
     width: 206px;
     margin-top: 29px;

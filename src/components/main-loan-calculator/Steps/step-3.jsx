@@ -4,14 +4,15 @@ import {useInput} from '../../../hooks/hooks';
 import {Validation} from '../../../const';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeOfferNumber} from '../../../store/actions';
+import {completePopupOpen} from '../../../utils';
 
 const Step3 = (props) => {
   const {setActive, openPopup} = props;
   const {offer} = useSelector((state) => state.DATA);
   const [isError, setError] = useState(false);
-  const name = useInput(``, Validation.IS_EMPTY);
-  const phone = useInput(``, Validation.IS_EMPTY);
-  const mail = useInput(``, Validation.IS_EMAIL);
+  const name = useInput(localStorage.getItem(`name`), Validation.IS_EMPTY);
+  const phone = useInput(localStorage.getItem(`phone`), Validation.IS_EMPTY);
+  const mail = useInput(localStorage.getItem(`mail`), Validation.IS_EMAIL);
 
   const dispatch = useDispatch();
 
@@ -28,14 +29,17 @@ const Step3 = (props) => {
     } else {
       dispatch(changeOfferNumber(offer.id));
       setError(false);
+      localStorage.setItem(`name`, name.value);
+      localStorage.setItem(`phone`, phone.value);
+      localStorage.setItem(`mail`, mail.value);
       resetForm();
       setActive(false);
-      openPopup(true);
+      completePopupOpen(openPopup);
     }
   };
 
   const onInputPhone = (evt) => {
-    if (!(evt.key === `ArrowLeft` || evt.key === `ArrowRight` || evt.key === `Backspace` || evt.key === `Tab`)) {
+    if (!(evt.key === `ArrowLeft` || evt.key === `ArrowRight` || evt.key === `Backspace` || evt.key === `Tab` || evt.key === `Delete`)) {
       evt.preventDefault();
     }
 

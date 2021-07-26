@@ -20,7 +20,7 @@ const MainLoanCalculator = () => {
   }, [isComplete]);
 
   return (
-    <section className="page-main__loan loan-calculator">
+    <section id="loan-goto" className="page-main__loan loan-calculator">
       <div className="container">
         <h2 className="loan-calculator__title">Кредитный калькулятор</h2>
         <div className="loan-calculator__wrapper">
