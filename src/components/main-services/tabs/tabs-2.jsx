@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 const Tabs2 = () => {
   return (
@@ -12,7 +11,7 @@ const Tabs2 = () => {
             <p className="tabs__text">Автокредит</p>
             <p className="tabs__text">Потребительский кредит</p>
             <p className="tabs__offers">Рассчитайте ежемесячный платеж<br/>
-              и ставку по кредиту воспользовавшись<br/> нашим <Link to="#" className="tabs__link">кредитным калькулятором</Link>
+              и ставку по кредиту воспользовавшись<br/> нашим <a href="#" className="tabs__link">кредитным калькулятором</a>
             </p>
           </div>
           <div className="tabs__image">

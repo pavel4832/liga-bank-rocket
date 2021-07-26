@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import HeaderMenu from "../header-menu/header-menu";
 import UserBlock from '../user-block/user-block';
-import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {changeMenu} from '../../store/actions';
-import {MENU_TYPE} from '../../const';
+import {MenuType} from '../../const';
 
 const Header = () => {
   const [isActive, setActive] = useState(false);
@@ -15,11 +14,11 @@ const Header = () => {
       <div className="container">
         <div className="page-header__wrapper">
           <div className="page-header__logo logo">
-            <Link
-              to="/"
+            <a
+              href="#"
               className="logo__link"
               onClick={() => {
-                dispatch(changeMenu(MENU_TYPE.SERVICES));
+                dispatch(changeMenu(MenuType.SERVICES));
               }}
             >
               <div className="logo__wrapper">
@@ -29,7 +28,7 @@ const Header = () => {
                 </picture>
                 <p className="logo__text">ЛИГА&nbsp;Банк</p>
               </div>
-            </Link>
+            </a>
           </div>
           <HeaderMenu isActive={isActive} setActive={setActive}/>
           <UserBlock isMobile={false} isMenuOpen={isActive} setActive={setActive}/>

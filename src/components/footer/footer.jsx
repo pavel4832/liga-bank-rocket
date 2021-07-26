@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {AppRoute, MENU_TYPE} from "../../const";
+import {AppRoute, MenuType} from "../../const";
 import {changeMenu} from "../../store/actions";
 import {useDispatch} from "react-redux";
 import {onMenuLinkClick} from '../../utils';
@@ -14,11 +14,11 @@ const Footer = () => {
         <div className="page-footer__wrapper">
           <div className="page-footer__left">
             <div className="page-footer__logo logo">
-              <Link
-                to="/"
+              <a
+                href="#"
                 className="logo__link"
                 onClick={() => {
-                  dispatch(changeMenu(MENU_TYPE.SERVICES));
+                  dispatch(changeMenu(MenuType.SERVICES));
                 }}
               >
                 <div className="logo__wrapper">
@@ -28,33 +28,33 @@ const Footer = () => {
                   </picture>
                   <p className="logo__text">ЛИГА Банк</p>
                 </div>
-              </Link>
+              </a>
             </div>
             <div className="page-footer__menu">
               <ul className="page-footer__list">
                 <li className="page-footer__item">
-                  <Link
-                    to={AppRoute.ROOT}
+                  <a
+                    href="#"
                     className="page-footer__link"
                     data-goto=".page-main__services"
                     onClick={(evt) => onMenuLinkClick(evt)}
-                  >Услуги</Link>
+                  >Услуги</a>
                 </li>
                 <li className="page-footer__item">
-                  <Link
-                    to={AppRoute.ROOT}
+                  <a
+                    href="#"
                     className="page-footer__link"
                     data-goto=".page-main__loan"
                     onClick={(evt) => onMenuLinkClick(evt)}
-                  >Рассчитать&nbsp;кредит</Link>
+                  >Рассчитать&nbsp;кредит</a>
                 </li>
                 <li className="page-footer__item">
-                  <Link
-                    to={AppRoute.ROOT}
+                  <a
+                    href="#"
                     className="page-footer__link"
                     data-goto=".page-main__contact"
                     onClick={(evt) => onMenuLinkClick(evt)}
-                  >Контакты</Link>
+                  >Контакты</a>
                 </li>
                 <li className="page-footer__item">
                   <Link
@@ -79,7 +79,7 @@ const Footer = () => {
             </div>
             <div className="page-footer__phone phone">
               <p className="phone__number">
-                <a href="tel:8 800 111 22 33" className="phone__link">8 800 111 22 33</a>
+                <a href="tel:88001112233" className="phone__link">8 800 111 22 33</a>
               </p>
               <p className="phone__info">Бесплатный&nbsp;для&nbsp;всех<br /> городов России</p>
             </div>

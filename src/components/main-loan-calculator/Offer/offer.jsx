@@ -4,12 +4,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setNewOffer} from '../../../store/actions';
 import {
   AUTO_PRICE_RATE,
-  FIRST_PAYMENT_RATE,
+  FirstPaymentRate,
   LoanPurpose,
   MIN_FIRST_PAYMENT_RATE,
   MOTHER,
   MONTHS,
-  RADIX, LOAN_AMOUNT_MIN, SALARY_RATE
+  RADIX, MinLoanAmount, SALARY_RATE
 } from '../../../const';
 import Popup from '../../popup/popup';
 import ErrorPopup from '../../error-popup/error-popup';
@@ -22,7 +22,7 @@ const Offer = (props) => {
   const dispatch = useDispatch();
 
   const getLoanAmount = () => {
-    let amount = price - (price * firstPayment / FIRST_PAYMENT_RATE.MAX);
+    let amount = price - (price * firstPayment / FirstPaymentRate.MAX);
     if (isMother) {
       amount = amount - MOTHER;
     }
@@ -33,9 +33,8 @@ const Offer = (props) => {
     if (purpose === LoanPurpose.MORTGAGE) {
       if (firstPayment < MIN_FIRST_PAYMENT_RATE) {
         return 9.4;
-      } else {
-        return 8.5;
       }
+      return 8.5;
     } else {
       if (isInsuranceAuto && isInsuranceLive) {
         return 3.5;
@@ -50,26 +49,26 @@ const Offer = (props) => {
 
   const getMonthPayment = () => {
     const amount = getLoanAmount();
-    const monthRate = (getLoanRate() / FIRST_PAYMENT_RATE.MAX) / MONTHS;
+    const monthRate = (getLoanRate() / FirstPaymentRate.MAX) / MONTHS;
     const loanPeriod = loanTerm * MONTHS;
     return parseInt(amount * (monthRate + (monthRate / (Math.pow(1 + monthRate, loanPeriod) - 1))), RADIX);
   };
 
   const getSalary = () => {
-    return parseInt(getMonthPayment() * FIRST_PAYMENT_RATE.MAX / SALARY_RATE, RADIX);
+    return parseInt(getMonthPayment() * FirstPaymentRate.MAX / SALARY_RATE, RADIX);
   };
 
   const loanAmount = getLoanAmount();
 
   useEffect(() => {
     if (purpose === LoanPurpose.MORTGAGE) {
-      if (loanAmount < LOAN_AMOUNT_MIN.MORTGAGE) {
+      if (loanAmount < MinLoanAmount.MORTGAGE) {
         setError(true);
       } else {
         setError(false);
       }
     } else {
-      if (loanAmount < LOAN_AMOUNT_MIN.AUTO) {
+      if (loanAmount < MinLoanAmount.AUTO) {
         setError(true);
       } else {
         setError(false);
@@ -82,11 +81,11 @@ const Offer = (props) => {
       id: offerNumber + 1,
       loanPurpose: (purpose === LoanPurpose.MORTGAGE) ? `Ипотека` : `Автокредит`,
       loanPrice: price,
-      loanFirstPayment: price * firstPayment / FIRST_PAYMENT_RATE.MAX,
+      loanFirstPayment: price * firstPayment / FirstPaymentRate.MAX,
       loanTime: loanTerm
     };
     if (purpose === LoanPurpose.MORTGAGE) {
-      if (loanAmount < LOAN_AMOUNT_MIN.MORTGAGE) {
+      if (loanAmount < MinLoanAmount.MORTGAGE) {
         setError(true);
       } else {
         setError(false);
@@ -94,7 +93,7 @@ const Offer = (props) => {
         setActive(true);
       }
     } else {
-      if (loanAmount < LOAN_AMOUNT_MIN.AUTO) {
+      if (loanAmount < MinLoanAmount.AUTO) {
         setError(true);
       } else {
         setError(false);
@@ -129,6 +128,7 @@ const Offer = (props) => {
       </div>
       <button
         className="offer__button button"
+        type="button"
         onClick={onOfferSendHandler}
       >Оформить заявку</button>
       {(isError) && <Popup name={`offer`} active={isError} setActive={setError}>

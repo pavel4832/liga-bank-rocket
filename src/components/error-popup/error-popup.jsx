@@ -1,12 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {LOAN_AMOUNT_MIN, LoanPurpose} from '../../const';
+import {MinLoanAmount, LoanPurpose} from '../../const';
 
 const ErrorPopup = () => {
   const {purpose} = useSelector((state) => state.DATA);
 
   const loanType = (purpose === LoanPurpose.MORTGAGE) ? `ипотечные кредиты` : `автокредиты`;
-  const loanAmountMin = (purpose === LoanPurpose.MORTGAGE) ? LOAN_AMOUNT_MIN.MORTGAGE : LOAN_AMOUNT_MIN.AUTO;
+  const loanAmountMin = (purpose === LoanPurpose.MORTGAGE) ? MinLoanAmount.MORTGAGE : MinLoanAmount.AUTO;
 
   return (
     <div className="step2__error popup-error" onClick={(evt) => evt.stopPropagation()}>

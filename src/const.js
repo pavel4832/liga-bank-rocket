@@ -14,12 +14,12 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-export const Validations = {
+export const Validation = {
   IS_EMPTY: {isEmpty: true},
   IS_EMAIL: {isEmpty: true, isEmail: true}
 };
 
-export const Validators = {
+export const Validator = {
   IS_EMPTY: `isEmpty`,
   IS_EMAIL: `isEmail`
 };
@@ -30,7 +30,7 @@ export const KeyName = {
 
 export const RADIX = 10;
 
-export const MENU_TYPE = {
+export const MenuType = {
   SERVICES: `services`,
   LOAN: `loan`,
   CONVERTER: `converter`,
@@ -59,7 +59,7 @@ export const TABS_MENU = [
   }
 ];
 
-export const PlaceMarkCords = [
+export const PLACE_MARK_CORDS = [
   [55.7499, 37.6290],
   [55.7961, 49.1066],
   [57.1530, 65.5441],
@@ -77,25 +77,25 @@ export const PurposeValue = {
   auto: `Автомобильное кредитование`
 };
 
-export const PRICES_DATA = {
+export const PriceData = {
   START_MORTGAGE: 1200000,
   END_MORTGAGE: 25000000,
   START_AUTO: 500000,
   END_AUTO: 5000000,
 };
 
-export const PRICE_STEP = {
+export const PriceStep = {
   MORTGAGE: 100000,
   AUTO: 50000,
 };
 
-export const FIRST_PAYMENT_RATE = {
+export const FirstPaymentRate = {
   MORTGAGE: 10,
   AUTO: 20,
   MAX: 100,
 };
 
-export const LOAN_TERM = {
+export const LoanTerm = {
   MIN_MORTGAGE: 5,
   MIN_AUTO: 1,
   MAX_MORTGAGE: 30,
@@ -112,7 +112,7 @@ export const AUTO_PRICE_RATE = 2000000;
 
 export const SALARY_RATE = 45;
 
-export const LOAN_AMOUNT_MIN = {
+export const MinLoanAmount = {
   MORTGAGE: 500000,
   AUTO: 200000,
 };

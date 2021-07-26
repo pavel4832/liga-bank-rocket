@@ -24,6 +24,7 @@ const Popup = (props) => {
       className={`${name}__popup popup ${active ? `active` : ``}`}
       onClick={() => popupCloseHandler(setActive)}
     >
+      <h3 className="popup-title visually-hidden">Модальное окно</h3>
       {children}
     </section>
   );

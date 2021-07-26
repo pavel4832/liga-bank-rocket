@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useInput} from '../../../hooks/hooks';
-import {Validations} from '../../../const';
+import {Validation} from '../../../const';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeOfferNumber} from '../../../store/actions';
 
@@ -9,9 +9,9 @@ const Step3 = (props) => {
   const {setActive, openPopup} = props;
   const {offer} = useSelector((state) => state.DATA);
   const [isError, setError] = useState(false);
-  const name = useInput(``, Validations.IS_EMPTY);
-  const phone = useInput(``, Validations.IS_EMPTY);
-  const mail = useInput(``, Validations.IS_EMAIL);
+  const name = useInput(``, Validation.IS_EMPTY);
+  const phone = useInput(``, Validation.IS_EMPTY);
+  const mail = useInput(``, Validation.IS_EMAIL);
 
   const dispatch = useDispatch();
 

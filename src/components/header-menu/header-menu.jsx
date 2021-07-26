@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {MENU_TYPE, AppRoute} from '../../const';
+import {MenuType, AppRoute} from '../../const';
 import {changeMenu} from '../../store/actions';
 import UserBlock from '../user-block/user-block';
 import PropTypes from 'prop-types';
@@ -19,25 +19,25 @@ const HeaderMenu = (props) => {
   let contactActiveLink = ``;
 
   switch (menuType) {
-    case MENU_TYPE.SERVICES:
+    case MenuType.SERVICES:
       servicesActiveLink = `page-menu__link--active`;
       loanActiveLink = ``;
       converterActiveLink = ``;
       contactActiveLink = ``;
       break;
-    case MENU_TYPE.LOAN:
+    case MenuType.LOAN:
       servicesActiveLink = ``;
       loanActiveLink = `page-menu__link--active`;
       converterActiveLink = ``;
       contactActiveLink = ``;
       break;
-    case MENU_TYPE.CONVERTER:
+    case MenuType.CONVERTER:
       servicesActiveLink = ``;
       loanActiveLink = ``;
       converterActiveLink = `page-menu__link--active`;
       contactActiveLink = ``;
       break;
-    case MENU_TYPE.CONTACT:
+    case MenuType.CONTACT:
       servicesActiveLink = ``;
       loanActiveLink = ``;
       converterActiveLink = ``;
@@ -60,57 +60,57 @@ const HeaderMenu = (props) => {
       </div>
       <ul className="page-menu__list">
         <li className="page-menu__item">
-          <Link
-            to={AppRoute.ROOT}
+          <a
+            href="#"
             className={`page-menu__link ${servicesActiveLink}`}
             data-goto=".page-main__services"
             onClick={(evt)=> {
               onMenuLinkClick(evt);
-              dispatch(changeMenu(MENU_TYPE.SERVICES));
+              dispatch(changeMenu(MenuType.SERVICES));
             }}
           >
             Услуги
-          </Link>
+          </a>
         </li>
         <li className="page-menu__item">
-          <Link
-            to={AppRoute.ROOT}
+          <a
+            href="#"
             className={`page-menu__link ${loanActiveLink}`}
             data-goto=".page-main__loan"
             onClick={(evt)=> {
               onMenuLinkClick(evt);
-              dispatch(changeMenu(MENU_TYPE.LOAN));
+              dispatch(changeMenu(MenuType.LOAN));
             }}
           >
             Рассчитать кредит
-          </Link>
+          </a>
         </li>
         <li className="page-menu__item">
           <Link
             to={AppRoute.CONVERTER}
             className={`page-menu__link ${converterActiveLink}`}
             onClick={()=> {
-              dispatch(changeMenu(MENU_TYPE.CONVERTER));
+              dispatch(changeMenu(MenuType.CONVERTER));
             }}
           >
             Конвертер валют
           </Link>
         </li>
         <li className="page-menu__item">
-          <Link
-            to={AppRoute.ROOT}
+          <a
+            href="#"
             className={`page-menu__link ${contactActiveLink}`}
             data-goto=".page-main__contact"
             onClick={(evt)=> {
               onMenuLinkClick(evt);
-              dispatch(changeMenu(MENU_TYPE.CONTACT));
+              dispatch(changeMenu(MenuType.CONTACT));
             }}
           >
             Контакты
-          </Link>
+          </a>
         </li>
         <li className="page-menu__item user-item">
-          <UserBlock isMobile={true}/>
+          <UserBlock isMobile={true} isMenuOpen={false} setActive={() => {}} />
         </li>
       </ul>
     </nav>
