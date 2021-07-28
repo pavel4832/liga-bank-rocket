@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {AppRoute, MenuType} from "../../const";
-import {changeMenu} from "../../store/actions";
-import {useDispatch} from "react-redux";
+import {changeMenu, redirectToRoute} from "../../store/actions";
+import {useDispatch, useSelector} from "react-redux";
 import {onMenuLinkClick} from '../../utils';
 
 const Footer = () => {
+  const {menuType} = useSelector((state) => state.DATA);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (menuType !== MenuType.QUESTIONS) {
+      onMenuLinkClick(menuType);
+    }
+  }, [menuType]);
 
   return (
     <footer className="page-footer">
@@ -14,12 +22,9 @@ const Footer = () => {
         <div className="page-footer__wrapper">
           <div className="page-footer__left">
             <div className="page-footer__logo logo">
-              <a
-                href="#"
+              <Link
+                to={AppRoute.ROOT}
                 className="logo__link"
-                onClick={() => {
-                  dispatch(changeMenu(MenuType.SERVICES));
-                }}
               >
                 <div className="logo__wrapper">
                   <picture>
@@ -28,34 +33,40 @@ const Footer = () => {
                   </picture>
                   <p className="logo__text">ЛИГА Банк</p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="page-footer__menu">
               <ul className="page-footer__list">
                 <li className="page-footer__item">
                   <a
-                    href="#services-goto"
+                    href="#"
                     className="page-footer__link"
                     onClick={(evt) => {
-                      onMenuLinkClick(evt);
+                      evt.preventDefault();
+                      dispatch(redirectToRoute(AppRoute.ROOT));
+                      dispatch(changeMenu(MenuType.SERVICES));
                     }}
                   >Услуги</a>
                 </li>
                 <li className="page-footer__item">
                   <a
-                    href="#loan-goto"
+                    href="#"
                     className="page-footer__link"
                     onClick={(evt) => {
-                      onMenuLinkClick(evt);
+                      evt.preventDefault();
+                      dispatch(redirectToRoute(AppRoute.ROOT));
+                      dispatch(changeMenu(MenuType.LOAN));
                     }}
                   >Рассчитать&nbsp;кредит</a>
                 </li>
                 <li className="page-footer__item">
                   <a
-                    href="#contact-goto"
+                    href="#"
                     className="page-footer__link"
                     onClick={(evt) => {
-                      onMenuLinkClick(evt);
+                      evt.preventDefault();
+                      dispatch(redirectToRoute(AppRoute.ROOT));
+                      dispatch(changeMenu(MenuType.CONTACT));
                     }}
                   >Контакты</a>
                 </li>

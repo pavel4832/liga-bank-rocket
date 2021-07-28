@@ -5,7 +5,7 @@ import {PLACE_MARK_CORDS} from '../../const';
 const MainContact = () => {
   return (
     <section className="page-main__contact contact">
-      <div id="contact-goto" className="container">
+      <div id="contact" className="container">
         <h2 className="contact__title">Отделения Лига Банка</h2>
         <YMaps>
           <div className="contact__map map">

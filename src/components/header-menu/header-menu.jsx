@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {MenuType, AppRoute} from '../../const';
-import {changeMenu} from '../../store/actions';
+import {changeMenu, redirectToRoute} from '../../store/actions';
 import UserBlock from '../user-block/user-block';
 import PropTypes from 'prop-types';
 import {onMenuLinkClick} from '../../utils';
@@ -50,6 +50,12 @@ const HeaderMenu = (props) => {
     setActive(true);
   };
 
+  useEffect(() => {
+    if (menuType !== MenuType.CONVERTER) {
+      onMenuLinkClick(menuType);
+    }
+  }, [menuType]);
+
   return (
     <nav className={`page-menu ${isActive && `active`}`}>
       <div
@@ -61,11 +67,12 @@ const HeaderMenu = (props) => {
       <ul className="page-menu__list">
         <li className="page-menu__item">
           <a
-            href="#services-goto"
+            href="#"
             className={`page-menu__link ${servicesActiveLink}`}
             onClick={(evt)=> {
+              evt.preventDefault();
+              dispatch(redirectToRoute(AppRoute.ROOT));
               dispatch(changeMenu(MenuType.SERVICES));
-              onMenuLinkClick(evt);
             }}
           >
             Услуги
@@ -73,11 +80,12 @@ const HeaderMenu = (props) => {
         </li>
         <li className="page-menu__item">
           <a
-            href="#loan-goto"
+            href="#"
             className={`page-menu__link ${loanActiveLink}`}
             onClick={(evt)=> {
+              evt.preventDefault();
+              dispatch(redirectToRoute(AppRoute.ROOT));
               dispatch(changeMenu(MenuType.LOAN));
-              onMenuLinkClick(evt);
             }}
           >
             Рассчитать кредит
@@ -96,11 +104,12 @@ const HeaderMenu = (props) => {
         </li>
         <li className="page-menu__item">
           <a
-            href="#contact-goto"
+            href="#"
             className={`page-menu__link ${contactActiveLink}`}
             onClick={(evt)=> {
+              evt.preventDefault();
+              dispatch(redirectToRoute(AppRoute.ROOT));
               dispatch(changeMenu(MenuType.CONTACT));
-              onMenuLinkClick(evt);
             }}
           >
             Контакты

@@ -1,4 +1,4 @@
-import {RADIX} from "./const";
+import {RADIX} from './const';
 
 export const popupOpenHandler = (setAction) => {
   const scrollY = window.pageYOffset;
@@ -23,18 +23,18 @@ export const getNumberFromString = (string, key) => {
   return parseInt(string.slice(0, cutIndex - 1).replaceAll(/\s/g, ``), RADIX);
 };
 
-export const onMenuLinkClick = (evt) => {
-  evt.preventDefault();
-  const href = evt.target.getAttribute(`href`).substring(1);
-  const scrollTarget = document.getElementById(href);
-  const topOffset = document.querySelector(`header`).offsetHeight;
-  const elementPosition = scrollTarget.getBoundingClientRect().top;
-  const offsetPosition = elementPosition - topOffset;
+export const onMenuLinkClick = (link) => {
+  const scrollTarget = document.getElementById(link);
+  if (scrollTarget) {
+    const topOffset = document.querySelector(`header`).offsetHeight;
+    const elementPosition = scrollTarget.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - topOffset;
 
-  window.scrollBy({
-    top: offsetPosition,
-    behavior: `smooth`
-  });
+    window.scrollBy({
+      top: offsetPosition,
+      behavior: `smooth`
+    });
+  }
 };
 
 export const completePopupOpen = (setAction) => {

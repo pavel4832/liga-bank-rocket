@@ -38,7 +38,7 @@ const Slider = (props) => {
 };
 
 Slider.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.number.isRequired,
   setActive: PropTypes.func.isRequired,
   slidesLength: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,

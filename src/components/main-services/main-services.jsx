@@ -18,7 +18,7 @@ const MainServices = () => {
   ];
 
   return (
-    <section id="services-goto" className="page-main__services services">
+    <section id="services" className="page-main__services services">
       <ServicesMenu isActive={isActive} setActive={setActive}/>
       <Slider
         name={`services-item`}

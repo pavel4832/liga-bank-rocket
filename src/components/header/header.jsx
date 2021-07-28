@@ -1,25 +1,20 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import HeaderMenu from "../header-menu/header-menu";
 import UserBlock from '../user-block/user-block';
-import {useDispatch} from 'react-redux';
-import {changeMenu} from '../../store/actions';
-import {MenuType} from '../../const';
+import {AppRoute} from '../../const';
 
 const Header = () => {
   const [isActive, setActive] = useState(false);
-  const dispatch = useDispatch();
 
   return (
     <header className="page-header">
       <div className="container">
         <div className="page-header__wrapper">
           <div className="page-header__logo logo">
-            <a
-              href="#"
+            <Link
+              to={AppRoute.ROOT}
               className="logo__link"
-              onClick={() => {
-                dispatch(changeMenu(MenuType.SERVICES));
-              }}
             >
               <div className="logo__wrapper">
                 <picture>
@@ -28,7 +23,7 @@ const Header = () => {
                 </picture>
                 <p className="logo__text">ЛИГА&nbsp;Банк</p>
               </div>
-            </a>
+            </Link>
           </div>
           <HeaderMenu isActive={isActive} setActive={setActive}/>
           <UserBlock isMobile={false} isMenuOpen={isActive} setActive={setActive}/>

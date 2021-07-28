@@ -1,9 +1,8 @@
 import * as actions from '../actions';
 import {createReducer} from '@reduxjs/toolkit';
-import {MenuType} from '../../const';
 
 const initialState = {
-  menuType: MenuType.SERVICES,
+  menuType: ``,
   purpose: ``,
   price: ``,
   firstPayment: ``,
