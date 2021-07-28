@@ -25,6 +25,9 @@ const DATA = createReducer(initialState, (builder) => {
     return {
       ...state,
       purpose: action.payload,
+      isMother: false,
+      isInsuranceAuto: false,
+      isInsuranceLive: false,
     };
   });
   builder.addCase(actions.changePrice, (state, action) => {

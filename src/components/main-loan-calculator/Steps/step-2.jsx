@@ -195,7 +195,7 @@ const Step2 = () => {
         max="100"
         step="5"
         value={`${firstPayment}`}
-        onChange={loanFirstPaymentRangeHandler}
+        onInput={loanFirstPaymentRangeHandler}
       />
       <label htmlFor="payment-range" className="visually-hidden">
         Изменить значение первого платежа

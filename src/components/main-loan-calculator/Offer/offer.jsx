@@ -63,17 +63,11 @@ const Offer = (props) => {
 
   useEffect(() => {
     if (purpose === LoanPurpose.MORTGAGE) {
-      if (loanAmount < MinLoanAmount.MORTGAGE) {
+      if (loanAmount < MinLoanAmount.MORTGAGE && !isError) {
         popupOpenHandler(setError);
-      } else {
-        setError(false);
       }
-    } else {
-      if (loanAmount < MinLoanAmount.AUTO) {
-        popupOpenHandler(setError);
-      } else {
-        setError(false);
-      }
+    } else if (loanAmount < MinLoanAmount.AUTO && !isError) {
+      popupOpenHandler(setError);
     }
   }, [loanAmount]);
 
