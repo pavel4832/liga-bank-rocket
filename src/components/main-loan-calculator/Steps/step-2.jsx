@@ -34,6 +34,7 @@ const Step2 = () => {
       newPrice = evt.target.value;
     }
     setPrice(`${newPrice.toLocaleString(`ru-RU`)}`);
+    setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
     dispatch(changePrice(newPrice));
   };
 
@@ -48,6 +49,7 @@ const Step2 = () => {
       setPriceError(true);
     } else {
       setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
+      setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
@@ -59,6 +61,7 @@ const Step2 = () => {
       setPriceError(false);
       dispatch(changePrice(newPrice));
       setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
+      setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
@@ -70,6 +73,7 @@ const Step2 = () => {
       setPriceError(false);
       dispatch(changePrice(newPrice));
       setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
+      setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
     }
   };
 
@@ -144,15 +148,6 @@ const Step2 = () => {
     <div className="loan-calculator__step2 step step2">
       <h3 className="step__title">Шаг 2. Введите параметры кредита</h3>
       <div className="step__label-wrapper">
-        <button
-          className="step__button button button--decrease"
-          aria-label="Увеличить"
-          onClick={priceDownClickHandler}
-        >
-          <svg width="16" height="2" viewBox="0 0 16 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line y1="1" x2="16" y2="1" stroke="#1F1E25" strokeWidth="2"/>
-          </svg>
-        </button>
         <label className="step__label">
           {(purpose === LoanPurpose.MORTGAGE) ? `Стоимость недвижимости` : `Стоимость автомобиля`}
           <input
@@ -166,6 +161,15 @@ const Step2 = () => {
           />
         </label>
         <span className="step__comments">От {minPrice.toLocaleString(`ru-RU`)}  до {maxPrice.toLocaleString(`ru-RU`)} рублей</span>
+        <button
+          className="step__button button button--decrease"
+          aria-label="Увеличить"
+          onClick={priceDownClickHandler}
+        >
+          <svg width="16" height="2" viewBox="0 0 16 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line y1="1" x2="16" y2="1" stroke="#1F1E25" strokeWidth="2"/>
+          </svg>
+        </button>
         <button
           className="step__button button button--increase"
           aria-label="Уменьшить"

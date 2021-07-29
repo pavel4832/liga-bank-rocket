@@ -38,7 +38,7 @@ export const onMenuLinkClick = (link) => {
 };
 
 export const completePopupOpen = (setAction) => {
-  const goTo = document.querySelector(`#loan-goto`);
+  const goTo = document.querySelector(`#loan`);
   const gotoBlockValue = goTo.getBoundingClientRect().top + pageYOffset - document.querySelector(`header`).offsetHeight;
   window.scrollTo({
     top: gotoBlockValue
