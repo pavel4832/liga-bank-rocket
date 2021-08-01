@@ -182,55 +182,59 @@ const Step2 = () => {
           </svg>
         </button>
       </div>
-      <label className="step__label">
-        Первоначальный взнос
+      <div className="step__label-wrapper">
+        <label className="step__label">
+          Первоначальный взнос
+          <input
+            value={isFirstPayment}
+            className="step__field step2__field"
+            type="text"
+            name="firstPayment"
+            onChange={loanFirstPaymentHandler}
+            onBlur={loanFirstPaymentCheckHandler}
+          />
+        </label>
         <input
-          value={isFirstPayment}
-          className="step__field step2__field"
-          type="text"
-          name="firstPayment"
-          onChange={loanFirstPaymentHandler}
-          onBlur={loanFirstPaymentCheckHandler}
+          id="payment-range"
+          className="step__range"
+          type="range"
+          min={`${firstPaymentMin}`}
+          max="100"
+          step="5"
+          value={`${firstPayment}`}
+          onInput={loanFirstPaymentRangeHandler}
         />
-      </label>
-      <input
-        id="payment-range"
-        className="step__range"
-        type="range"
-        min={`${firstPaymentMin}`}
-        max="100"
-        step="5"
-        value={`${firstPayment}`}
-        onInput={loanFirstPaymentRangeHandler}
-      />
-      <label htmlFor="payment-range" className="visually-hidden">
-        Изменить значение первого платежа
-      </label>
-      <span className="step__comments">{firstPayment.toLocaleString(`ru-RU`)}%</span>
-      <label className="step__label">
-        Срок кредитования
+        <label htmlFor="payment-range" className="visually-hidden">
+          Изменить значение первого платежа
+        </label>
+        <span className="step__comments">{firstPayment.toLocaleString(`ru-RU`)}%</span>
+      </div>
+      <div className="step__label-wrapper">
+        <label className="step__label">
+          Срок кредитования
+          <input
+            value={isLoanTerm}
+            className="step__field step2__field"
+            type="text"
+            name="loanTerm"
+            onChange={loanTermChangeHandler}
+            onBlur={loanTermCheckHandler}
+          />
+        </label>
         <input
-          value={isLoanTerm}
-          className="step__field step2__field"
-          type="text"
-          name="loanTerm"
-          onChange={loanTermChangeHandler}
-          onBlur={loanTermCheckHandler}
+          className="step__range"
+          id="term-range"
+          type="range"
+          min={`${minLoanTerm}`}
+          max={`${maxLoanTerm}`}
+          step="1"
+          value={`${loanTerm}`}
+          onChange={loanTermRangeChangeHandler}
         />
-      </label>
-      <input
-        className="step__range"
-        id="term-range"
-        type="range"
-        min={`${minLoanTerm}`}
-        max={`${maxLoanTerm}`}
-        step="1"
-        value={`${loanTerm}`}
-        onChange={loanTermRangeChangeHandler}
-      />
-      <label htmlFor="term-range" className="visually-hidden">
-        Изменить значение срока кредитования
-      </label>
+        <label htmlFor="term-range" className="visually-hidden">
+          Изменить значение срока кредитования
+        </label>
+      </div>
       <div className="step__comments-list">
         <span className="step__comments">
           {minLoanTerm.toLocaleString(`ru-RU`)}
