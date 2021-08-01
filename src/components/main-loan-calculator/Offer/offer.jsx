@@ -11,9 +11,7 @@ import {
   MONTHS,
   RADIX, MinLoanAmount, SALARY_RATE
 } from '../../../const';
-import Popup from '../../popup/popup';
-import ErrorPopup from '../../error-popup/error-popup';
-import {popupOpenHandler} from "../../../utils";
+import ErrorMessage from '../../error-message/error-message';
 
 const Offer = (props) => {
   const {setActive} = props;
@@ -59,17 +57,19 @@ const Offer = (props) => {
     return parseInt(getMonthPayment() * FirstPaymentRate.MAX / SALARY_RATE, RADIX);
   };
 
-  const loanAmount = getLoanAmount();
-
   useEffect(() => {
     if (purpose === LoanPurpose.MORTGAGE) {
-      if (loanAmount < MinLoanAmount.MORTGAGE && !isError) {
-        popupOpenHandler(setError);
+      if (getLoanAmount() < MinLoanAmount.MORTGAGE) {
+        setError(true);
+      } else {
+        setError(false);
       }
-    } else if (loanAmount < MinLoanAmount.AUTO && !isError) {
-      popupOpenHandler(setError);
+    } else if (getLoanAmount() < MinLoanAmount.AUTO) {
+      setError(true);
+    } else {
+      setError(false);
     }
-  }, [loanAmount]);
+  }, [getLoanAmount()]);
 
   const onOfferSendHandler = () => {
     const offer = {
@@ -79,56 +79,41 @@ const Offer = (props) => {
       loanFirstPayment: price * firstPayment / FirstPaymentRate.MAX,
       loanTime: loanTerm
     };
-    if (purpose === LoanPurpose.MORTGAGE) {
-      if (loanAmount < MinLoanAmount.MORTGAGE) {
-        popupOpenHandler(setError);
-      } else {
-        setError(false);
-        dispatch(setNewOffer(offer));
-        setActive(true);
-      }
-    } else {
-      if (loanAmount < MinLoanAmount.AUTO) {
-        popupOpenHandler(setError);
-      } else {
-        setError(false);
-        dispatch(setNewOffer(offer));
-        setActive(true);
-      }
-    }
+    dispatch(setNewOffer(offer));
+    setActive(true);
   };
 
   return (
     <div className="loan-calculator__offer offer">
-      <h3 className="offer__title">Наше предложение</h3>
-      <div className="offer__wrapper">
-        <div className="offer__item loan-amount">
-          <p className="offer__data">{`${loanAmount.toLocaleString(`ru-RU`)}`}</p>
-          <p className="offer__comment">
-            {(purpose === LoanPurpose.MORTGAGE) ? `Сумма ипотеки` : `Сумма автокредита`}
-          </p>
+      {(isError) && <ErrorMessage />}
+      {(!isError) && <React.Fragment>
+        <h3 className="offer__title">Наше предложение</h3>
+        <div className="offer__wrapper">
+          <div className="offer__item loan-amount">
+            <p className="offer__data">{`${getLoanAmount().toLocaleString(`ru-RU`)}`}</p>
+            <p className="offer__comment">
+              {(purpose === LoanPurpose.MORTGAGE) ? `Сумма ипотеки` : `Сумма автокредита`}
+            </p>
+          </div>
+          <div className="offer__item loan-rate">
+            <p className="offer__data">{`${getLoanRate().toLocaleString(`ru-RU`)}%`}</p>
+            <p className="offer__comment">Процентная ставка</p>
+          </div>
+          <div className="offer__item loan-payment">
+            <p className="offer__data">{`${getMonthPayment().toLocaleString(`ru-RU`)} рублей`}</p>
+            <p className="offer__comment">Ежемесячный платеж</p>
+          </div>
+          <div className="offer__item loan-salary">
+            <p className="offer__data">{`${getSalary().toLocaleString(`ru-RU`)} рублей`}</p>
+            <p className="offer__comment">Необходимый доход</p>
+          </div>
         </div>
-        <div className="offer__item loan-rate">
-          <p className="offer__data">{`${getLoanRate().toLocaleString(`ru-RU`)}%`}</p>
-          <p className="offer__comment">Процентная ставка</p>
-        </div>
-        <div className="offer__item loan-payment">
-          <p className="offer__data">{`${getMonthPayment().toLocaleString(`ru-RU`)} рублей`}</p>
-          <p className="offer__comment">Ежемесячный платеж</p>
-        </div>
-        <div className="offer__item loan-salary">
-          <p className="offer__data">{`${getSalary().toLocaleString(`ru-RU`)} рублей`}</p>
-          <p className="offer__comment">Необходимый доход</p>
-        </div>
-      </div>
-      <button
-        className="offer__button button"
-        type="button"
-        onClick={onOfferSendHandler}
-      >Оформить заявку</button>
-      {(isError) && <Popup name={`offer`} active={isError} setActive={setError}>
-        <ErrorPopup />
-      </Popup>}
+        <button
+          className="offer__button button"
+          type="button"
+          onClick={onOfferSendHandler}
+        >Оформить заявку</button>
+      </React.Fragment>}
     </div>
   );
 };

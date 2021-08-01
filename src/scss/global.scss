@@ -67,11 +67,11 @@ button:disabled {
   margin: 0 auto;
   box-sizing: border-box;
   @media screen and(max-width: $tablet) {
-    max-width: 768px;
+    min-width: 768px;
     padding: 0 45px;
   }
   @media screen and(max-width: $mobile) {
-    max-width: 320px;
+    min-width: 320px;
     padding: 0 15px;
   }
 }

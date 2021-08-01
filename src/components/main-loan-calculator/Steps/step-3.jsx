@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useInput} from '../../../hooks/hooks';
-import {Validation} from '../../../const';
+import {LoanPurpose, PriceData, Validation} from '../../../const';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeOfferNumber} from '../../../store/actions';
 import {completePopupOpen} from '../../../utils';
 
 const Step3 = (props) => {
   const {setActive, openPopup} = props;
-  const {offer} = useSelector((state) => state.DATA);
+  const {purpose, offer} = useSelector((state) => state.DATA);
   const [isError, setError] = useState(false);
-  const name = useInput(localStorage.getItem(`name`), Validation.IS_EMPTY);
-  const phone = useInput(localStorage.getItem(`phone`), Validation.IS_EMPTY);
-  const mail = useInput(localStorage.getItem(`mail`), Validation.IS_EMAIL);
+  const name = useInput((localStorage.getItem(`name`)) ? localStorage.getItem(`name`) : ``, Validation.IS_EMPTY);
+  const phone = useInput((localStorage.getItem(`phone`)) ? localStorage.getItem(`phone`) : ``, Validation.IS_EMPTY);
+  const mail = useInput((localStorage.getItem(`mail`)) ? localStorage.getItem(`mail`) : ``, Validation.IS_EMAIL);
 
   const dispatch = useDispatch();
 
@@ -77,7 +77,8 @@ const Step3 = (props) => {
           <span className="step3__data">{offer.loanPurpose}</span>
         </li>
         <li className="step3__item">
-          <span className="step3__name">Стоимость недвижимости</span>
+          <span className="step3__name">
+            {(purpose === LoanPurpose.MORTGAGE) ? `Стоимость недвижимости` : `Стоимость автомобиля`}</span>
           <span className="step3__data">{`${offer.loanPrice.toLocaleString(`ru-RU`)} рублей`}</span>
         </li>
         <li className="step3__item">
@@ -114,8 +115,8 @@ const Step3 = (props) => {
             placeholder="Телефон"
             required={true}
             value={phone.value}
+            readOnly={true}
             onKeyDown={(evt) => onInputPhone(evt)}
-            onChange={(evt) => phone.onChange(evt)}
             onBlur={(evt) => phone.onBlur(evt)}
           />
           {(phone.isEmpty) && <span className={`step3__errorText ${(isError) && `error`}`}>Пожалуйста, заполните поле</span>}

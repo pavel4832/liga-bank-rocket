@@ -45,3 +45,25 @@ export const completePopupOpen = (setAction) => {
   });
   popupOpenHandler(setAction);
 };
+
+export const getLoanTermNumber = (value) => {
+  if (value.search(`лет`) > 0) {
+    return getNumberFromString(value, `лет`);
+  } else if (value.search(`год`) > 0) {
+    return getNumberFromString(value, `год`);
+  } else if (value.search(`года`) > 0) {
+    return getNumberFromString(value, `года`);
+  }
+  return parseInt(value, RADIX);
+};
+
+export const getLoanTermDescription = (value) => {
+  if (Math.floor(value / RADIX) !== 1) {
+    if (value === 1 || value % RADIX === 1) {
+      return ` год`;
+    } else if ((value > 1 && value <= 4) || (value % RADIX > 1 && value % RADIX <= 4)) {
+      return ` года`;
+    }
+  }
+  return ` лет`;
+};
