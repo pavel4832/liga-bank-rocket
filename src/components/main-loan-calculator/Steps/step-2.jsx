@@ -234,13 +234,13 @@ const Step2 = () => {
         <label htmlFor="term-range" className="visually-hidden">
           Изменить значение срока кредитования
         </label>
-      </div>
-      <div className="step__comments-list">
-        <span className="step__comments">
-          {minLoanTerm.toLocaleString(`ru-RU`)}
-          {getLoanTermDescription(minLoanTerm)}
-        </span>
-        <span className="step__comments">{maxLoanTerm.toLocaleString(`ru-RU`)} лет</span>
+        <div className="step__comments-list">
+          <span className="step__comments">
+            {minLoanTerm.toLocaleString(`ru-RU`)}
+            {getLoanTermDescription(minLoanTerm)}
+          </span>
+          <span className="step__comments">{maxLoanTerm.toLocaleString(`ru-RU`)} лет</span>
+        </div>
       </div>
       {(purpose === LoanPurpose.MORTGAGE) && (
         <div className="step__checkbox-wrapper">
