@@ -8,8 +8,11 @@
 }
 
 .tabs-menu__list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: max-content;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -17,7 +20,6 @@
 
 .tabs-menu__item {
   list-style-type: none;
-  width: 25%;
 }
 
 .tabs-menu__btn {

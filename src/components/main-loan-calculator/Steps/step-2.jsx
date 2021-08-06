@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
-import {PriceData, FirstPaymentRate, LoanTerm, LoanPurpose, PriceStep, RADIX} from '../../../const';
+import {PriceData, FirstPaymentRate, LoanTerm, LoanPurpose, PriceStep, RADIX, Units} from '../../../const';
 import {changePrice, changeFirstPayment, changeLoanTerm, changeMotherMoney, changeInsuranceAuto, changeInsuranceLive} from '../../../store/actions';
-import {getNumberFromString, getLoanTermDescription, getLoanTermNumber} from '../../../utils';
+import {getNumberFromString, getLoanTermDescription, getLoanTermNumber, getCaret, setCaretToPos} from '../../../utils';
 
-const Step2 = () => {
+const Step2 = (props) => {
   const {purpose, price, firstPayment, loanTerm, isMother, isInsuranceAuto, isInsuranceLive} = useSelector((state) => state.DATA);
-  const [isPriceError, setPriceError] = useState(false);
+  const {isPriceError, setPriceError} = props;
   const [isPrice, setPrice] = useState(`${price.toLocaleString(`ru-RU`)} рублей`);
   const [isFirstPayment, setPayment] = useState(`${(price * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
   const [isLoanTerm, setLoanTerm] = useState(`${loanTerm.toLocaleString(`ru-RU`)}${getLoanTermDescription(loanTerm)}`);
+  const [isCaretPos, setCaretPos] = useState();
+  const [isActiveElement, setActiveElement] = useState(document.querySelector(`:focus`));
 
   const dispatch = useDispatch();
 
@@ -18,6 +21,10 @@ const Step2 = () => {
     setPayment(`${(price * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
     setLoanTerm(`${loanTerm.toLocaleString(`ru-RU`)}${getLoanTermDescription(loanTerm)}`);
   }, [purpose]);
+
+  useEffect(() => {
+    setCaretToPos(isActiveElement, isCaretPos);
+  }, [isPrice, isFirstPayment, isLoanTerm]);
 
   const minPrice = (purpose === LoanPurpose.MORTGAGE) ? PriceData.START_MORTGAGE : PriceData.START_AUTO;
   const maxPrice = (purpose === LoanPurpose.MORTGAGE) ? PriceData.END_MORTGAGE : PriceData.END_AUTO;
@@ -32,14 +39,58 @@ const Step2 = () => {
     setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
   };
 
+  const checkNewPrice = (newPrice) => {
+    if (newPrice < minPrice) {
+      if (!isPriceError) {
+        setPriceError(true);
+        return minPrice;
+      } else {
+        setPriceError(false);
+        return minPrice;
+      }
+    } else {
+      if (newPrice > maxPrice) {
+        if (!isPriceError) {
+          setPriceError(true);
+          return maxPrice;
+        } else {
+          setPriceError(false);
+          return maxPrice;
+        }
+      } else {
+        setPriceError(false);
+        return newPrice
+      }
+    }
+  };
+
+  const inputClickHandler = (evt, gap) => {
+    if (isPriceError) {
+      let priceValue = document.getElementById(`price`).value;
+      priceValue = checkNewPrice(priceValue );
+      if (priceValue) {
+        setNewPrice(priceValue);
+      }
+      setPriceError(false);
+    }
+    const currentInput = evt.target;
+    const rangeValue = evt.target.value.length;
+    let currentCaretPos = getCaret(currentInput);
+    if (currentCaretPos > rangeValue - gap) {
+      setCaretToPos(currentInput, rangeValue - gap);
+    }
+    currentCaretPos = getCaret(currentInput);
+    setCaretPos(currentCaretPos);
+  };
+
   const priceChangeHandler = (evt) => {
     let newPrice;
     if (evt.target.value.search(`рублей`) > 0) {
       newPrice = getNumberFromString(evt.target.value, `рублей`);
     } else {
-      newPrice = evt.target.value;
+      newPrice = parseInt(evt.target.value, RADIX);
     }
-    setNewPrice(newPrice);
+    (newPrice) && setNewPrice(newPrice);
   };
 
   const priceCheckHandler = (evt) => {
@@ -52,41 +103,18 @@ const Step2 = () => {
     if (newPrice < minPrice || newPrice > maxPrice) {
       setPriceError(true);
     } else {
-      setPrice(`${newPrice.toLocaleString(`ru-RU`)} рублей`);
-      setPayment(`${(newPrice * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
+      (newPrice) && setNewPrice(newPrice);
     }
   };
 
   const priceDownClickHandler = () => {
-    let newPrice = price - priceStep;
-    if (newPrice < minPrice) {
-      if (!isPriceError) {
-        setPriceError(true);
-      } else {
-        setPriceError(false);
-        newPrice = minPrice;
-        setNewPrice(newPrice);
-      }
-    } else {
-      setPriceError(false);
-      setNewPrice(newPrice);
-    }
+    let newPrice = checkNewPrice(price - priceStep);
+    setNewPrice(newPrice);
   };
 
   const priceUpClickHandler = () => {
-    let newPrice = price + priceStep;
-    if (newPrice > maxPrice) {
-      if (!isPriceError) {
-        setPriceError(true);
-      } else {
-        setPriceError(false);
-        newPrice = maxPrice;
-        setNewPrice(newPrice);
-      }
-    } else {
-      setPriceError(false);
-      setNewPrice(newPrice);
-    }
+    let newPrice = checkNewPrice(price + priceStep);
+    setNewPrice(newPrice);
   };
 
   const loanFirstPaymentHandler = (evt) => {
@@ -96,8 +124,10 @@ const Step2 = () => {
     } else {
       newPayment = parseInt(evt.target.value, RADIX);
     }
-    setPayment(`${newPayment.toString()}`);
-    dispatch(changeFirstPayment(newPayment * FirstPaymentRate.MAX / price));
+    if (newPayment) {
+      setPayment(`${newPayment.toString()}`);
+      dispatch(changeFirstPayment(newPayment * FirstPaymentRate.MAX / price));
+    }
   };
 
   const loanFirstPaymentCheckHandler = (evt) => {
@@ -124,14 +154,21 @@ const Step2 = () => {
   };
 
   const loanTermChangeHandler = (evt) => {
-    let newTerm = getLoanTermNumber(evt.target.value);
-    setLoanTerm(`${newTerm.toString()}${getLoanTermDescription(newTerm)}`);
-    dispatch(changeLoanTerm(newTerm));
+    let newTerm;
+    if (evt.target.value.search(`лет`) > 0) {
+      newTerm = getNumberFromString(evt.target.value, `лет`);
+    } else {
+      newTerm = parseInt(evt.target.value, RADIX);
+    }
+    if (newTerm) {
+      setLoanTerm(`${newTerm.toString()}${getLoanTermDescription(newTerm)}`);
+      dispatch(changeLoanTerm(newTerm));
+    }
   };
 
   const loanTermCheckHandler = (evt) => {
     let newTerm = getLoanTermNumber(evt.target.value);
-    if (newTerm < minLoanTerm) {
+    if (!newTerm || newTerm < minLoanTerm) {
       newTerm = minLoanTerm;
     } else if (newTerm > maxLoanTerm) {
       newTerm = maxLoanTerm;
@@ -146,6 +183,18 @@ const Step2 = () => {
     dispatch(changeLoanTerm(newTerm));
   };
 
+  const onlyNumberInput = (evt) => {
+    if (!(evt.key === `ArrowLeft` || evt.key === `ArrowRight` || evt.key === `Backspace` || evt.key === `Tab` || evt.key === `Delete` || (/[0-9\+\ \-\(\)]/.test(evt.key)))) {
+      evt.preventDefault();
+    }
+    if (evt.key === `Backspace` ) {
+      setCaretPos(getCaret(evt.target) - 1);
+    }
+    if ((/[0-9\+\ \-\(\)]/.test(evt.key))) {
+      setCaretPos(getCaret(evt.target) + 1);
+    }
+  };
+
   return (
     <div className="loan-calculator__step2 step step2">
       <h3 className="step__title">Шаг 2. Введите параметры кредита</h3>
@@ -156,10 +205,13 @@ const Step2 = () => {
             value={(!isPriceError) ? isPrice : `Некорректное значение`}
             className={`step__field step2__field ${(isPriceError) && `field-error`}`}
             type="text"
+            id="price"
             name="price"
-            onClick={() => setPriceError(false)}
+            onClick={(evt) => inputClickHandler(evt, Units.PRICE)}
             onChange={priceChangeHandler}
             onBlur={priceCheckHandler}
+            onKeyDown={onlyNumberInput}
+            onFocus={(evt) => setActiveElement(evt.target)}
           />
         </label>
         <span className="step__comments">От {minPrice.toLocaleString(`ru-RU`)}  до {maxPrice.toLocaleString(`ru-RU`)} рублей</span>
@@ -190,8 +242,11 @@ const Step2 = () => {
             className="step__field step2__field"
             type="text"
             name="firstPayment"
+            onClick={(evt) => inputClickHandler(evt, Units.PRICE)}
             onChange={loanFirstPaymentHandler}
             onBlur={loanFirstPaymentCheckHandler}
+            onKeyDown={onlyNumberInput}
+            onFocus={(evt) => setActiveElement(evt.target)}
           />
         </label>
         <input
@@ -217,8 +272,11 @@ const Step2 = () => {
             className="step__field step2__field"
             type="text"
             name="loanTerm"
+            onClick={(evt) => inputClickHandler(evt, Units.YEAR)}
             onChange={loanTermChangeHandler}
             onBlur={loanTermCheckHandler}
+            onKeyDown={onlyNumberInput}
+            onFocus={(evt) => setActiveElement(evt.target)}
           />
         </label>
         <input
@@ -282,6 +340,11 @@ const Step2 = () => {
       )}
     </div>
   );
+};
+
+Step2.propTypes = {
+  isPriceError: PropTypes.bool.isRequired,
+  setPriceError: PropTypes.func.isRequired,
 };
 
 export default Step2;

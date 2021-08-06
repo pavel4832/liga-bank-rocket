@@ -67,3 +67,39 @@ export const getLoanTermDescription = (value) => {
   }
   return ` лет`;
 };
+
+export const getCaret = (el) => {
+  if (el.selectionStart) {
+    return el.selectionStart;
+  } else if (document.selection) {
+    el.focus();
+    const r = document.selection.createRange();
+    if (r == null) {
+      return 0;
+    }
+    let re = el.createTextRange(), rc = re.duplicate();
+    re.moveToBookmark(r.getBookmark());
+    rc.setEndPoint(`EndToStart`, re);
+
+    return rc.text.length;
+  }
+  return 0;
+}
+
+export const setSelectionRange = (input, selectionStart, selectionEnd) => {
+  if (input.setSelectionRange) {
+    input.focus();
+    input.setSelectionRange(selectionStart, selectionEnd);
+  }
+  else if (input.createTextRange) {
+    let range = input.createTextRange();
+    range.collapse(true);
+    range.moveEnd(`character`, selectionEnd);
+    range.moveStart(`character`, selectionStart);
+    range.select();
+  }
+}
+
+export const setCaretToPos = (input, pos) => {
+  setSelectionRange(input, pos, pos);
+}

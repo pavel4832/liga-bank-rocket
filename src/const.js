@@ -116,3 +116,8 @@ export const MinLoanAmount = {
   MORTGAGE: 500000,
   AUTO: 200000,
 };
+
+export const Units = {
+  PRICE: 7,
+  YEAR: 4
+};

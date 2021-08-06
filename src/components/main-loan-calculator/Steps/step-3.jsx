@@ -74,7 +74,7 @@ const Step3 = (props) => {
         </li>
         <li className="step3__item">
           <span className="step3__name">Цель кредита</span>
-          <span className="step3__data">{offer.loanPurpose}</span>
+          <span className="step3__data">{(purpose === LoanPurpose.MORTGAGE) ? `Ипотека` : `Автокредит`}</span>
         </li>
         <li className="step3__item">
           <span className="step3__name">
@@ -115,8 +115,8 @@ const Step3 = (props) => {
             placeholder="Телефон"
             required={true}
             value={phone.value}
-            readOnly={true}
             onKeyDown={(evt) => onInputPhone(evt)}
+            onChange={(evt) => phone.onChange(evt)}
             onBlur={(evt) => phone.onBlur(evt)}
           />
           {(phone.isEmpty) && <span className={`step3__errorText ${(isError) && `error`}`}>Пожалуйста, заполните поле</span>}
