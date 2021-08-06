@@ -11,8 +11,8 @@ const Step2 = (props) => {
   const [isPrice, setPrice] = useState(`${price.toLocaleString(`ru-RU`)} рублей`);
   const [isFirstPayment, setPayment] = useState(`${(price * firstPayment / FirstPaymentRate.MAX).toLocaleString(`ru-RU`)} рублей`);
   const [isLoanTerm, setLoanTerm] = useState(`${loanTerm.toLocaleString(`ru-RU`)}${getLoanTermDescription(loanTerm)}`);
-  const [isCaretPos, setCaretPos] = useState();
-  const [isActiveElement, setActiveElement] = useState(document.querySelector(`:focus`));
+  const [isActiveElement, setActiveElement] = useState(document.getElementById(`name`));
+  const [isGap, setGap] = useState(Units.PRICE)
 
   const dispatch = useDispatch();
 
@@ -23,7 +23,13 @@ const Step2 = (props) => {
   }, [purpose]);
 
   useEffect(() => {
-    setCaretToPos(isActiveElement, isCaretPos);
+    if (isActiveElement) {
+      const rangeValue = isActiveElement.value.length;
+      let currentCaretPos = getCaret(isActiveElement);
+      if (currentCaretPos > rangeValue - isGap) {
+        setCaretToPos(isActiveElement, rangeValue - isGap);
+      }
+    }
   }, [isPrice, isFirstPayment, isLoanTerm]);
 
   const minPrice = (purpose === LoanPurpose.MORTGAGE) ? PriceData.START_MORTGAGE : PriceData.START_AUTO;
@@ -65,22 +71,19 @@ const Step2 = (props) => {
   };
 
   const inputClickHandler = (evt, gap) => {
-    if (isPriceError) {
-      let priceValue = document.getElementById(`price`).value;
-      priceValue = checkNewPrice(priceValue );
-      if (priceValue) {
-        setNewPrice(priceValue);
-      }
-      setPriceError(false);
-    }
     const currentInput = evt.target;
-    const rangeValue = evt.target.value.length;
-    let currentCaretPos = getCaret(currentInput);
-    if (currentCaretPos > rangeValue - gap) {
-      setCaretToPos(currentInput, rangeValue - gap);
+    if (isPriceError) {
+      let newPrice = checkNewPrice(price);
+      setNewPrice(newPrice);
+      setPriceError(false);
+      setCaretToPos(currentInput, 9);
+    } else {
+      const rangeValue = evt.target.value.length;
+      let currentCaretPos = getCaret(currentInput);
+      if (currentCaretPos > rangeValue - gap) {
+        setCaretToPos(currentInput, rangeValue - gap);
+      }
     }
-    currentCaretPos = getCaret(currentInput);
-    setCaretPos(currentCaretPos);
   };
 
   const priceChangeHandler = (evt) => {
@@ -154,12 +157,8 @@ const Step2 = (props) => {
   };
 
   const loanTermChangeHandler = (evt) => {
-    let newTerm;
-    if (evt.target.value.search(`лет`) > 0) {
-      newTerm = getNumberFromString(evt.target.value, `лет`);
-    } else {
-      newTerm = parseInt(evt.target.value, RADIX);
-    }
+    const newTerm = parseInt(evt.target.value, RADIX);
+    console.log(newTerm);
     if (newTerm) {
       setLoanTerm(`${newTerm.toString()}${getLoanTermDescription(newTerm)}`);
       dispatch(changeLoanTerm(newTerm));
@@ -187,12 +186,6 @@ const Step2 = (props) => {
     if (!(evt.key === `ArrowLeft` || evt.key === `ArrowRight` || evt.key === `Backspace` || evt.key === `Tab` || evt.key === `Delete` || (/[0-9\+\ \-\(\)]/.test(evt.key)))) {
       evt.preventDefault();
     }
-    if (evt.key === `Backspace` ) {
-      setCaretPos(getCaret(evt.target) - 1);
-    }
-    if ((/[0-9\+\ \-\(\)]/.test(evt.key))) {
-      setCaretPos(getCaret(evt.target) + 1);
-    }
   };
 
   return (
@@ -211,7 +204,10 @@ const Step2 = (props) => {
             onChange={priceChangeHandler}
             onBlur={priceCheckHandler}
             onKeyDown={onlyNumberInput}
-            onFocus={(evt) => setActiveElement(evt.target)}
+            onFocus={(evt) => {
+              setActiveElement(evt.target);
+              setGap(Units.PRICE);
+            }}
           />
         </label>
         <span className="step__comments">От {minPrice.toLocaleString(`ru-RU`)}  до {maxPrice.toLocaleString(`ru-RU`)} рублей</span>
@@ -238,6 +234,7 @@ const Step2 = (props) => {
         <label className="step__label">
           Первоначальный взнос
           <input
+            disabled={isPriceError}
             value={isFirstPayment}
             className="step__field step2__field"
             type="text"
@@ -246,10 +243,14 @@ const Step2 = (props) => {
             onChange={loanFirstPaymentHandler}
             onBlur={loanFirstPaymentCheckHandler}
             onKeyDown={onlyNumberInput}
-            onFocus={(evt) => setActiveElement(evt.target)}
+            onFocus={(evt) => {
+              setActiveElement(evt.target);
+              setGap(Units.PRICE);
+            }}
           />
         </label>
         <input
+          disabled={isPriceError}
           id="payment-range"
           className="step__range"
           type="range"
@@ -268,6 +269,7 @@ const Step2 = (props) => {
         <label className="step__label">
           Срок кредитования
           <input
+            disabled={isPriceError}
             value={isLoanTerm}
             className="step__field step2__field"
             type="text"
@@ -276,10 +278,14 @@ const Step2 = (props) => {
             onChange={loanTermChangeHandler}
             onBlur={loanTermCheckHandler}
             onKeyDown={onlyNumberInput}
-            onFocus={(evt) => setActiveElement(evt.target)}
+            onFocus={(evt) => {
+              setActiveElement(evt.target);
+              setGap(Units.YEAR);
+            }}
           />
         </label>
         <input
+          disabled={isPriceError}
           className="step__range"
           id="term-range"
           type="range"
@@ -303,6 +309,7 @@ const Step2 = (props) => {
       {(purpose === LoanPurpose.MORTGAGE) && (
         <div className="step__checkbox-wrapper">
           <input
+            disabled={isPriceError}
             id="step-checkbox-mother"
             className="step__checkbox visually-hidden"
             type="checkbox"
@@ -317,6 +324,7 @@ const Step2 = (props) => {
       {(purpose === LoanPurpose.AUTO) && (
         <div className="step__checkbox-wrapper">
           <input
+            disabled={isPriceError}
             id="step-checkbox-auto"
             className="step__checkbox visually-hidden"
             type="checkbox"
@@ -327,6 +335,7 @@ const Step2 = (props) => {
             Оформить КАСКО в нашем банке
           </label>
           <input
+            disabled={isPriceError}
             id="step-checkbox-live"
             className="step__checkbox visually-hidden"
             type="checkbox"
